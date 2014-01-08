@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <title>Terra Flamenco @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @*@Styles.Render("~/Content/css/mobile")*@
+</head>
+    <body>
+        <div id="header">
+            <div class="left">
+                <a href="/">
+                    <img src="~/Content/Images/logo.png" alt="Terra Flamenco main" /></a>
+                <p>Официальный сайт </p>
+            </div>
+            <ul id="menu">
+                <li>
+                    <div id="news" onclick="location.href='/news'">Новости</div>
+                </li>
+                <li>
+                    <div id="bio" onclick="location.href='/bio'">Биография</div>
+                </li>
+                <li>
+                    <div id="multimedia" onclick="location.href='/multimedia'">Мультимедиа</div>
+                </li>
+                <li>
+                    <div id="rep" onclick="location.href='/rep'">Репертуар</div>
+                </li>
+                <li>
+                    <div id="concerts" onclick="location.href='/concerts'">Концерты</div>
+                </li>
+                <li>
+                    <div id="contacts" onclick="location.href='/contacts'">Контакты</div>
+                </li>
+            </ul>
+        </div>
+
+        <div id="content">
+            @RenderBody()
+        </div>
+
+        <div id="footer">
+            <span>Новоуральск-Екатеринбург. Terra Flamenco &copy; 2013</span>
+        </div>
+
+        <script>
+            var loc = (document.location.href).match(/.*\/(.+)/)[1];
+            document.getElementById(loc).classList.add("target");
+        </script>
+    </body>
+</html>

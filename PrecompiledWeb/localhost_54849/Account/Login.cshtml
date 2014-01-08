@@ -1,0 +1,104 @@
+﻿@* Удалите этот раздел при использовании пакетного режима *@
+@section Scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
+
+@{
+    Layout = "~/_SiteLayout.cshtml";
+    Page.Title = "Вход";
+
+    // Инициализация общих переменных страницы
+    var email = "";
+    var password = "";
+    var rememberMe = false;
+
+    var returnUrl = Request.QueryString["ReturnUrl"];
+    if (returnUrl.IsEmpty()) {
+        // Для некоторых внешних поставщиков входе всегда нужно возвращаемое значение URL-адреса
+        returnUrl = Href("~/");
+    }
+
+    // Настройка проверки
+    Validation.RequireField("email", "Следует указать адрес электронной почты.");
+    Validation.RequireField("password", "Следует указать пароль.");
+    Validation.Add("password",
+        Validator.StringLength(
+            maxLength: Int32.MaxValue,
+            minLength: 6,
+            errorMessage: "Пароль должен содержать не меньше 6 символов"));
+
+    // Если это запрос POST, данные проверяются и обрабатываются
+    if (IsPost) {
+        AntiForgery.Validate();
+        // это внешний запрос входа?
+        string provider = Request.Form["provider"];
+        if (!provider.IsEmpty()) {
+            OAuthWebSecurity.RequestAuthentication(provider, Href("~/Account/RegisterService", new { returnUrl }));
+            return;
+        } else if (Validation.IsValid()) {
+            email = Request.Form["email"];
+            password = Request.Form["password"];
+            rememberMe = Request.Form["rememberMe"].AsBool();
+
+            if (WebSecurity.UserExists(email) && WebSecurity.GetPasswordFailuresSinceLastSuccess(email) > 4 && WebSecurity.GetLastPasswordFailureDate(email).AddSeconds(60) > DateTime.UtcNow) {
+                Response.Redirect("~/Account/AccountLockedOut");
+                return;
+            }
+
+            // Попытка входа по указанным учетным данным
+            if (WebSecurity.Login(email, password, rememberMe)) {
+                Context.RedirectLocal(returnUrl);
+                return;
+            } else {
+                ModelState.AddFormError("Указано неправильное имя пользователя или пароль.");
+            }
+        }
+    }
+}
+
+<hgroup class="title">
+    <h1>@Page.Title.</h1>
+</hgroup>
+
+<section id="loginForm">
+    <h2>Используйте для входа локальную учетную запись.</h2>
+    <form method="post">
+        @AntiForgery.GetHtml()
+        @* При наличии ошибок проверки выводится сообщение об ошибке *@
+        @Html.ValidationSummary("Войти не удалось. Устраните ошибки и повторите попытку.", excludeFieldErrors: true, htmlAttributes: null)
+
+        <fieldset>
+            <legend>Вход в учетную запись</legend>
+            <ol>
+                <li class="email">
+                    <label for="email" @if (!ModelState.IsValidField("email"))
+                                       {<text>class="error-label"</text>}>Адрес электронной почты</label>
+                    <input type="text" id="email" name="email" value="@email" @Validation.For("email")/>
+                    @* Все ошибки проверки имени пользователя выводятся на странице *@
+                    @Html.ValidationMessage("email")
+                </li>
+                <li class="password">
+                    <label for="password" @if (!ModelState.IsValidField("password")) {<text>class="error-label"</text>}>Пароль</label>
+                    <input type="password" id="password" name="password" @Validation.For("password")/>
+                    @* Все ошибки проверки пароля выводятся на странице *@
+                    @Html.ValidationMessage("password")
+                </li>
+                <li class="remember-me">
+                    <input type="checkbox" id="rememberMe" name="rememberMe" value="true" checked="@rememberMe" />
+                    <label class="checkbox" for="rememberMe">Запомнить меня</label>
+                </li>
+            </ol>
+            <input type="submit" value="Выполнить вход" />
+        </fieldset>
+    </form>
+    <p>
+        <a href="~/Account/Register">У вас нет учетной записи?</a>
+        <a href="~/Account/ForgotPassword">Вы забыли свой пароль?</a>
+    </p>
+</section>
+
+<section class="social" id="socialLoginForm">
+    <h2>Используйте для входа другую службу.</h2>
+    @RenderPage("~/Account/_ExternalLoginsList.cshtml")
+</section>

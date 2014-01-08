@@ -1,0 +1,99 @@
+﻿.rep {
+    width: 100%;
+}
+
+.report_item {
+    width: 100%;
+    min-height: 200px;
+    overflow: auto;
+    margin-top: 3%;
+}
+
+.report_user {
+    width: 20%;
+    float: left;
+    min-height: 200px;
+}
+
+.report_user * {
+    display: block;
+    width: 100%;
+}
+
+.report_content {
+    width: 75%;
+    margin-left: 25%;
+    min-height: 200px;
+    border-bottom: 1px solid white;
+}
+
+.report_date {
+    width: 100%;
+    text-align: right;
+}
+
+#report_action {
+    margin-top: 10%;
+}
+
+#report_action * {
+    background-color: black;
+}
+
+.report_text {
+    background-color: black;
+    border: 1px solid #b71;
+    resize: none;
+    width: -moz-calc(100% - 2px);
+    width: -webkit-calc(100% - 2px);
+    width: calc(100% - 2px);
+    min-height: 200px;
+}
+
+#report_button, .report_edit, #edit_button, #delete_button {
+    cursor: pointer;
+    float: right;
+    background-color: #b71;
+    min-width: 20%;
+    padding: 0 5px;
+    min-height: 20px;
+    text-align: center;
+    margin-top: 1%;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.report_edit {
+    display: none;
+}
+
+#report_action h1 {
+    margin-bottom: 5%;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+#report_action .report_content{
+    border: none;
+}
+
+#not_auth_wrap {
+    display: none;
+}
+
+#not_auth {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    font-size: 17px;
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    background-color: #b71;
+    padding: 3px;
+}
+
+#uid_box, #secret_box, #report_action, .report_id, .secret_box {
+    display: none;
+}

@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <title>Terra Flamenco @ViewBag.Title</title>
+
+    <script type="text/javascript" src="//vk.com/js/api/openapi.js?105"></script>
+    <script type="text/javascript">
+        VK.init({ apiId: 4094087 });
+    </script>
+
+    @Styles.Render("~/Content/css")
+    @RenderSection("AdditionalStyles", required: false)
+</head>
+    <body>
+        <div id="header">
+            <div class="left">
+                <a href="/">
+                    <img src="~/Content/Images/logo.png" alt="Terra Flamenco main" /></a>
+                <p>Официальный сайт </p>
+            </div>
+            <ul id="menu">
+                <li>
+                    <div id="news" onclick="location.href='/news'">Новости</div>
+                </li>
+                <li>
+                    <div id="bio" onclick="location.href='/bio'">Биография</div>
+                </li>
+                <li>
+                    <div id="multimedia" onclick="location.href='/multimedia'">Галерея</div>
+                </li>
+                <li>
+                    <div id="concerts" onclick="location.href='/concerts'">Концерты</div>
+                </li>
+                <li>
+                    <div id="rep" onclick="location.href='/rep'">Отзывы</div>
+                </li>
+                <li>
+                    <div id="contacts" onclick="location.href='/contacts'">Контакты</div>
+                </li>
+            </ul>
+        </div>
+
+        <div id="content">
+            @RenderBody()
+        </div>
+        
+        <div id="results">
+            <script type="text/javascript">
+                VK.Widgets.Auth("vk_auth", {
+                    width: "200px", onAuth: function (data) {
+                        
+                    }
+                });
+                VK.Widgets.Like("vk_like", { type: "button" });
+            </script>
+            <div id="counter">
+                <h3>Посещения</h3> <br/>
+                Всего: <div id="all"></div> <br/>
+                Сегодня: <div id="today"></div> <br/>
+                Последнее: <div id="last"></div> <br/>
+                @{ 
+                   var browser_name = Request.Browser.Browser;
+                   var browser_ver = Request.Browser.Version;
+                }
+                Ваш браузер: @browser_name v @browser_ver <br/>
+            </div>
+            <div id="vk_auth"></div>
+            <div id="vk_like"></div>
+        </div>
+
+        <div id="footer">
+            <div>Новоуральск-Екатеринбург. Terra Flamenco &copy; 2013</div>
+        </div>
+        
+        @Scripts.Render("~/bundles/frontend")
+        @RenderSection("JavaScript", required: false)
+    </body>
+</html>

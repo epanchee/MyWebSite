@@ -1,0 +1,67 @@
+﻿#back {
+    position: fixed;
+    top: 0;
+	width: 100%;
+	height: 100%;
+    background: #000000;
+    opacity: 0.85;
+}
+
+#wrapper {
+    position: fixed;
+    top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#showedImg, #imgBack {
+    width: 50%;
+    margin: 7% 25% 0 25%;
+}
+
+#start {
+    width: 100%;
+    height: 3%;
+    font-size: 1.2em;
+    padding-top: 1%;
+    text-align: center;
+    margin: auto;
+    cursor: pointer;
+}
+
+#start:hover {
+    background-color: #b71;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#imgBack {
+    position: fixed;
+    height: 100%;
+    top: -5%;
+}
+
+#left, #right {
+    width: 50%;
+    height: 65%;
+    float: left;
+    cursor: pointer;
+}
+
+#left:hover, #right:hover {
+    background: #000000;
+    opacity: 0.1;
+}
+
+#loading {
+    width: 4%;
+    margin: 20% 48% 0 48%;
+}
+
+@media screen and (max-width: 1280px) {
+    #showedImg, #imgBack {
+        width: 60%;
+        margin: 5% 20% 0 20%;
+    }
+}

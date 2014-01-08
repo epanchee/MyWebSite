@@ -1,0 +1,190 @@
+﻿@using System.Diagnostics
+@using System.Drawing
+@using MyWebSite.Models
+@{
+    ViewBag.Title = "Галерея";
+    Layout = "~/Views/Shared/Light_Layout.cshtml";
+}
+
+<div id="galery">
+
+</div>
+
+@section AdditionalStyles{
+    @Styles.Render("~/Content/css/galery")
+}
+
+@section JavaScript {
+    <script>
+    @{
+        DirectoryInfo directory = new DirectoryInfo(Server.MapPath(@"~/Content/Images/Galery"));
+        var files = directory.GetFiles();
+        List<String> fnames = new List<string>();
+        if (!Directory.Exists(Server.MapPath(@"~/Content/Images/Galery/compressed/")))
+        {
+            Directory.CreateDirectory(Server.MapPath(@"~/Content/Images/Galery/compressed/"));
+        }
+        foreach (var file in files)
+        {
+            fnames.Add(file.Name);
+            if (!File.Exists(Server.MapPath(@"~/Content/Images/Galery/compressed/" + file.Name)))
+            {
+                var image = Image.FromFile(Server.MapPath(@"~/Content/Images/Galery/" + file.Name));
+                var img = MultimediaFunctions.ResizeOrigImg(image, 0.3*image.Width, 0.3*image.Height);
+                img.Save(Server.MapPath(@"~/Content/Images/Galery/compressed/" + file.Name));
+            }
+        }
+        var names = @Html.Raw(Json.Encode(fnames));
+    }
+
+        var current;
+        var preloaded;
+        var files = @names
+
+        function createField() {
+            for (var i = 0; i < files.length; i++) {
+                var item = document.createElement("img");
+                document.getElementById("galery").appendChild(item);
+                item.setAttribute("src", "/Content/Images/Galery/compressed/" + files[i]);
+                item.setAttribute("class", "gal_item");
+                item.setAttribute("alt", files[i]);
+                item.setAttribute("onclick", "_viewImg(\"" + files[i] + "\")");
+            }
+        }
+
+        function preload(name) {
+            var pr_img = document.createElement('img');
+            pr_img.setAttribute("src", "/Content/Images/Galery/" + name);
+        }
+
+        function _viewImg(filePath)
+        {
+            history.pushState('esc', null, '');
+            history.pushState(filePath, null, '');
+            viewImg(filePath);
+        }
+
+        function viewImg(filePath) {
+            if (document.getElementById("wrapper")) return false;
+            var back = document.createElement('div');
+            var wrap = document.createElement('div');
+            wrap.id = "wrapper";
+            back.id = "back";
+            back.style.display = "block";
+            document.body.appendChild(back);
+            document.body.appendChild(wrap);
+
+            var img = document.createElement('img');
+            var load = document.createElement('img');
+            load.setAttribute("src", "/Content/Images/loading.gif");
+            load.setAttribute("id", "loading");
+            img.setAttribute("src", "/Content/Images/Galery/" + filePath);
+            img.setAttribute("id", "showedImg");
+            img.style.display = "none";
+            img.setAttribute("onload", "loaded()");
+            img.setAttribute("alt", filePath);
+            document.cookie = "src=" + filePath;
+            wrap.appendChild(load);
+            wrap.appendChild(img);
+            wrap.setAttribute('onclick', 'esc()');
+            current = filePath;
+            
+            var imgBack = document.createElement('div');
+            var left = document.createElement('div');
+            var right = document.createElement('div');
+            var start = document.createElement('div');
+            start.id = 'start';
+            start.textContent = 'Сделать стартовой';
+            left.id = 'left';
+            right.id = 'right';
+            left.setAttribute('onclick', 'navImages(37)');
+            right.setAttribute('onclick', 'navImages(39)');
+            start.setAttribute('onclick', 'setStart()');
+            imgBack.id = 'imgBack';
+            imgBack.appendChild(start);
+            imgBack.appendChild(left);
+            imgBack.appendChild(right);
+            document.body.appendChild(imgBack);
+        }
+
+        function getCookie(name) {
+            var matches = document.cookie.match(new RegExp(
+                "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(matches[1]) : undefined;
+        }
+
+        function deleteCookie(name) {
+            var date = new Date(0);
+            document.cookie = name + "=; path=/; expires=" + date.toUTCString();
+        }
+
+        function loaded() {
+            (w = document.getElementById("loading")).parentNode.removeChild(w);
+            document.getElementById("showedImg").style.display = "block";
+        }
+
+        function setStart() {
+            document.cookie = "home=" + current;
+        }
+
+        function esc() {
+            (w = document.getElementById("wrapper")).parentNode.removeChild(w);
+            (b = document.getElementById("back")).parentNode.removeChild(b);
+            (i = document.getElementById("imgBack")).parentNode.removeChild(i);
+            deleteCookie("src");
+            current = null;
+        }
+
+        function navImages(keyID) {
+            var j = files.indexOf(current);
+            j += keyID == 37 ? -1 : 1;
+            if (j < 0) j = 0;
+            if (j > files.length - 1) j = files.length - 1;
+            (w = document.getElementById("wrapper")).parentNode.removeChild(w);
+            (b = document.getElementById("back")).parentNode.removeChild(b);
+            (i = document.getElementById("imgBack")).parentNode.removeChild(i);
+            viewImg(files[j]);
+            history.pushState(files[j], null, '');
+            
+            var p = j + (j > 0 ? 1 : -1);
+            if (p < 0) p = 0;
+            if (p > files.length - 1) p = files.length - 1;
+            preload(files[p]);
+        }
+
+        window.onload = function(e) {
+            var home = getCookie("home");
+            var name = getCookie("src");
+            if (!name)
+                if (home) name = home;
+                else return;
+            console.log(home + ' ' + name);
+            viewImg(name);
+            history.pushState(name, null, '');
+        };
+
+        window.addEventListener("popstate", function(e) {
+            if (!history.state) return;
+            esc();
+            if (history.state != 'esc') viewImg(history.state);
+        }, false);
+
+        document.onkeydown = function(e) {
+            var KeyID = (window.event) ? event.keyCode : e.keyCode;
+            if (KeyID == 27 || KeyID == 37 || KeyID == 39 || KeyID == 112) {
+                e.preventDefault();
+                if (!current) return;
+            }
+            if (KeyID == 27) {
+                esc();
+            }
+            // left/right arrows
+            if (KeyID == 37 || KeyID == 39) {
+                navImages(KeyID);
+            }
+        };
+
+        createField();
+    </script>
+}

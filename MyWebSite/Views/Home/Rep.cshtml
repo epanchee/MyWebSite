@@ -1,0 +1,58 @@
+﻿@using System.Globalization
+@using System.Threading
+@using MyWebSite.Models
+@{
+    ViewBag.Title = "Отзывы";
+    Layout = "~/Views/Shared/Light_Layout.cshtml";
+    Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
+}
+
+@section AdditionalStyles{
+    @Styles.Render("~/Content/css/reports")
+}
+
+<div class="rep">
+    @{
+        var reports = DataBaseReader.GetReports();
+        foreach (var report in reports)
+        {
+            var user = VKapi.Interact(report.uid);
+            var href = "http://vk.com/id"+@user.uid;
+            
+            <div class="report_item">
+                <div class="report_user">
+                    <img alt="user" src=@user.photo_100 /> <br/>
+                    <a href=@href>@user.first_name @user.last_name</a>
+                </div>
+                <div class="report_id">@report.Id</div>
+        
+                <div class="report_content">@report.content</div>
+                <div class="report_date">@report.date</div>
+                <div class="report_edit" onclick="editRep(this)">Редактировать</div>
+            </div>
+        }
+    }
+    
+    <div id="not_auth_wrap" class="report_item">
+        <div id="not_auth">Авторизуйтесь в vk.com чтобы оставить отзыв</div>
+    </div>
+
+    <div class="report_item" id="report_action">
+        <h1> Оставить отзыв</h1>
+        <div class="report_user">
+            <img id="report_user_img" src="" /> <br />
+            <a id="report_user_href" href="#"></a>
+        </div>
+        <form class="report_content" id="post_report" method="POST">
+            <textarea required placeholder="Оставьте отзыв.." name="report_text" class="report_text"></textarea> <br/>
+            <input type="text" name="uid" id="uid_box" />
+            <input type="text" name="secret" id="secret_box" />
+            <input type="text" name="type" class="secret_box" value="send">
+            <button onclick="checkSecret(this)" type="submit" id="report_button">Отправить</button>
+        </form>
+    </div>
+</div>
+
+@section JavaScript {
+    @Scripts.Render("~/bundles/rep_front")
+}
