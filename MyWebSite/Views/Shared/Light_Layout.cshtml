@@ -61,10 +61,14 @@
                 Сегодня: <div id="today"></div> <br/>
                 Последнее: <div id="last"></div> <br/>
                 @{ 
-                   var browser_name = Request.Browser.Browser;
-                   var browser_ver = Request.Browser.Version;
+                    var browser_name = Request.Browser.Browser;
+                    var browser_ver = Request.Browser.Version;
                 }
                 Ваш браузер: @browser_name v @browser_ver <br/>
+            </div>
+            <div id="voting">
+                <div id="vote_content"></div>
+                <div class="button" id="vote_button" onclick="location.href = '/vote'">Голосовать</div>
             </div>
             <div id="vk_auth"></div>
             <div id="vk_like"></div>

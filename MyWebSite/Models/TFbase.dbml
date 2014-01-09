@@ -16,4 +16,13 @@
       <Column Name="secret" Type="System.String" DbType="NChar(32)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Voting" Member="Voting">
+    <Type Name="Voting">
+      <Column Name="ip" Type="System.String" DbType="NChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
+      <Column Name="rate" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="text" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

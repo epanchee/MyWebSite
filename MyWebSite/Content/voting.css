@@ -1,0 +1,21 @@
+﻿.voting {
+    width: 100%;
+    height: 100%;
+}
+
+.voting *{
+    margin: 1%;
+}
+
+.voting form textarea {
+    width: 50%;
+    min-height: 200px;
+    background-color: black;
+    border: 1px solid #b71;
+    resize: none;
+}
+
+.voting td {
+    text-align: center;
+    width: 5%;
+}

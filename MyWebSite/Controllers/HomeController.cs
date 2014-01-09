@@ -73,5 +73,37 @@ namespace MyWebSite.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Vote()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Vote(String a)
+        {
+            try
+            {
+                var dbreader = new DataBaseReader();
+                int rt;
+                Int32.TryParse(Request["mark"], out rt);
+                dbreader.InsertVote(
+                    new Voting
+                    {
+                        ip = Request.UserHostAddress,
+                        name = Request["name"],
+                        email = Request["email"],
+                        rate = rt,
+                        text = Request["text"]
+                    }, Request["secret"], Request.UserHostAddress);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.StackTrace);
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }

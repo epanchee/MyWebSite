@@ -37,6 +37,27 @@ function ajaxCounter(uid) {
     xmlhttp.send(null);
 }
 
+function ajaxVotingSuccess(status, text) {
+    if (status === 200) {
+        document.getElementById("vote_content").innerHTML = text;
+    }
+}
+
+function ajaxVoting() {
+    var xmlhttp = getXmlHttp();
+    xmlhttp.open("GET", '/users/voting?'+ '&r=' + Math.random());
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4) {
+            ajaxVotingSuccess(
+                xmlhttp.status,
+                xmlhttp.responseText
+            );
+        }
+    }
+
+    xmlhttp.send(null);
+}
+
 function whatTimeIsIt() {
     var xmlhttp = getXmlHttp();
     xmlhttp.open("GET", '/users/time' + '?r=' + Math.random());
@@ -73,6 +94,9 @@ VK.Auth.getLoginStatus(function (response) {
 var resolution = document.createElement('div');
 resolution.textContent = 'Разрешение ' + screen.width + 'x' + screen.height;
 document.getElementById("counter").appendChild(resolution);
+
+ajaxVoting();
+setInterval(ajaxVoting, 10000);
 
 var loc = (document.location.href).match(/.*\/(.+)/)[1];
 var elem = document.getElementById(loc);

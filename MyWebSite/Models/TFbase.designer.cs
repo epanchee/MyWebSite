@@ -36,6 +36,9 @@ namespace MyWebSite.Models
     partial void InsertCounter(Counter instance);
     partial void UpdateCounter(Counter instance);
     partial void DeleteCounter(Counter instance);
+    partial void InsertVoting(Voting instance);
+    partial void UpdateVoting(Voting instance);
+    partial void DeleteVoting(Voting instance);
     #endregion
 		
 		public TFbaseDataContext(string connection) : 
@@ -75,6 +78,14 @@ namespace MyWebSite.Models
 			get
 			{
 				return this.GetTable<Counter>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Voting> Voting
+		{
+			get
+			{
+				return this.GetTable<Voting>();
 			}
 		}
 	}
@@ -346,6 +357,164 @@ namespace MyWebSite.Models
 					this._secret = value;
 					this.SendPropertyChanged("secret");
 					this.OnsecretChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Voting")]
+	public partial class Voting : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _ip;
+		
+		private string _name;
+		
+		private string _email;
+		
+		private System.Nullable<int> _rate;
+		
+		private string _text;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnipChanging(string value);
+    partial void OnipChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void OnemailChanging(string value);
+    partial void OnemailChanged();
+    partial void OnrateChanging(System.Nullable<int> value);
+    partial void OnrateChanged();
+    partial void OntextChanging(string value);
+    partial void OntextChanged();
+    #endregion
+		
+		public Voting()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ip", DbType="NChar(20) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string ip
+		{
+			get
+			{
+				return this._ip;
+			}
+			set
+			{
+				if ((this._ip != value))
+				{
+					this.OnipChanging(value);
+					this.SendPropertyChanging();
+					this._ip = value;
+					this.SendPropertyChanged("ip");
+					this.OnipChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NChar(40)")]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_email", DbType="NChar(40)")]
+		public string email
+		{
+			get
+			{
+				return this._email;
+			}
+			set
+			{
+				if ((this._email != value))
+				{
+					this.OnemailChanging(value);
+					this.SendPropertyChanging();
+					this._email = value;
+					this.SendPropertyChanged("email");
+					this.OnemailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rate", DbType="Int")]
+		public System.Nullable<int> rate
+		{
+			get
+			{
+				return this._rate;
+			}
+			set
+			{
+				if ((this._rate != value))
+				{
+					this.OnrateChanging(value);
+					this.SendPropertyChanging();
+					this._rate = value;
+					this.SendPropertyChanged("rate");
+					this.OnrateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_text", DbType="NVarChar(MAX)")]
+		public string text
+		{
+			get
+			{
+				return this._text;
+			}
+			set
+			{
+				if ((this._text != value))
+				{
+					this.OntextChanging(value);
+					this.SendPropertyChanging();
+					this._text = value;
+					this.SendPropertyChanged("text");
+					this.OntextChanged();
 				}
 			}
 		}

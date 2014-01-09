@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -171,6 +172,31 @@ namespace MyWebSite.Models
 
             Context.Connection.Close();
             return "Wrong uid";
+        }
+
+        public bool InsertVote(Voting record, string secret, string ip)
+        {
+            if (!Context.Voting.Select(t => t.ip).Contains(ip))
+            {
+                Context.Voting.InsertOnSubmit(record);
+                Context.SubmitChanges();
+                Context.Connection.Close();
+                return true;
+            }
+
+            Context.Connection.Close();
+            return false;
+        }
+
+        public int[] GetRateVotesCount()
+        {
+            var ret = new int[] {0,0,0,0,0};
+            for (var i = 1; i<=5; i++)
+            {
+                ret[i-1] = Context.Voting.Count(t => t.rate == i);
+            }
+            Context.Connection.Close();
+            return ret;
         }
     }
 }

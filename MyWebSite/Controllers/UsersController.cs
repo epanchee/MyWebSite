@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.IO;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Web.Mvc;
 using MyWebSite.Models;
@@ -33,10 +31,13 @@ namespace MyWebSite.Controllers
 
         public ActionResult EditReport()
         {
-            //var user = VKapi.Interact(Request["uid"]); 
-            //return Json(new{uid = Request["uid"], secret = Request["secret"], id = Request["id"], name = user.first_name, photo = user.photo_100},
-            //    JsonRequestBehavior.AllowGet); 
             return View();
         }
+
+        public ActionResult Voting()
+        {
+            return View();
+        }
+
     }
 }

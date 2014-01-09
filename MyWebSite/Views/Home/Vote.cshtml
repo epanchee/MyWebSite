@@ -1,0 +1,51 @@
+﻿@using System.Collections.Specialized
+@using MyWebSite.Models
+@{
+    ViewBag.Title = "Голосование";
+    Layout = "~/Views/Shared/Light_Layout.cshtml";
+    var dbreader = new DataBaseReader();
+}
+
+<div class="voting">
+    <form method="POST">
+        <label>Имя</label>
+        <input type="text" name="name" required placeholder="Введите свое имя"/> 
+        <br/>
+        <label>E-mail</label>
+        <input type="email" name="email" placeholder="Введите ваш e-mail"/>
+        <br/>
+        <h3>Оцените группу Terra Flamenco:</h3> <br/>
+        <table>
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td><input name="mark" type="radio" value="1" required /></td>
+                <td><input name="mark" type="radio" value="2" required /></td>
+                <td><input name="mark" type="radio" value="3" required /></td>
+                <td><input name="mark" type="radio" value="4" required /></td>
+                <td><input name="mark" type="radio" value="5" required /></td>
+            </tr>
+        </table>
+        <h3>Какая музыка вам нравится?</h3> <br/>
+        <input type="checkbox" value="jazz"/> Джаз <br/>
+        <input type="checkbox" value="bluse" /> Блюз <br />
+        <input type="checkbox" value="flamenco" /> Фламенко <br />
+        <input type="checkbox" value="classic" /> Классика <br />
+        <input type="checkbox" value="rock" /> Рок <br />
+        <input type="checkbox" value="metal" /> Металл <br />
+        <input type="checkbox" value="other" /> Другое <br />
+        <h3>Ваши впечатления о группе в целом</h3> <br/>
+        <textarea placeholder="Ваши впечатления" name="text"></textarea> <br/>
+        <input type="text" value="" class="secret_box"/>
+        <button type="submit" class="button">Отправить</button>
+    </form>
+</div>
+
+@section AdditionalStyles{
+    @Styles.Render("~/Content/css/voting")
+}

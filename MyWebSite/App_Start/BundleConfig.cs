@@ -30,6 +30,7 @@ namespace MyWebSite
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
             bundles.Add(new StyleBundle("~/Content/css/galery").Include("~/Content/galery.css"));
             bundles.Add(new StyleBundle("~/Content/css/reports").Include("~/Content/reports.css"));
+            bundles.Add(new StyleBundle("~/Content/css/voting").Include("~/Content/voting.css"));
             bundles.Add(new StyleBundle("~/Content/css/mobile").Include("~/Content/site.mobile.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
