@@ -17,9 +17,9 @@
 @section JavaScript {
     <script>
     @{
-        DirectoryInfo directory = new DirectoryInfo(Server.MapPath(@"~/Content/Images/Galery"));
+        var directory = new DirectoryInfo(Server.MapPath(@"~/Content/Images/Galery"));
         var files = directory.GetFiles();
-        List<String> fnames = new List<string>();
+        var fnames = new List<string>();
         if (!Directory.Exists(Server.MapPath(@"~/Content/Images/Galery/compressed/")))
         {
             Directory.CreateDirectory(Server.MapPath(@"~/Content/Images/Galery/compressed/"));
@@ -152,6 +152,8 @@
             if (p > files.length - 1) p = files.length - 1;
             preload(files[p]);
         }
+        
+        createField();
 
         window.onload = function(e) {
             var home = getCookie("home");
@@ -185,6 +187,5 @@
             }
         };
 
-        createField();
     </script>
 }
