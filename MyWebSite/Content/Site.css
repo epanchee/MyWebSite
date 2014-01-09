@@ -36,7 +36,7 @@ input , textarea {border: 1px solid #b71;}
 .secret_box {display: none;}
 #vote_button {width: 200px;}
 #vote_content {min-height: 200px;}
-#voting{margin-bottom: 2%}
+#voting{margin-bottom: 7%}
 .button {
     cursor: pointer;
     padding: 0 5px;
