@@ -58,6 +58,14 @@ function timeAjaxSuccess(status, text) {
     document.getElementById("last").textContent = obj.now;
 }
 
+var resolution = document.createElement('div');
+resolution.textContent = 'Разрешение ' + screen.width + 'x' + screen.height;
+document.getElementById("counter").appendChild(resolution);
+
+var loc = (document.location.href).match(/.*\/(.+)/)[1];
+var elem = document.getElementById(loc);
+if (elem != null) elem.classList.add("target");
+
 VK.Auth.getLoginStatus(function (response) {
     if (response.session) {
         document.cookie = "uid=" + response.session['mid'];
@@ -69,11 +77,3 @@ VK.Auth.getLoginStatus(function (response) {
         whatTimeIsIt();
     }
 });
-
-var resolution = document.createElement('div');
-resolution.textContent = 'Разрешение ' + screen.width + 'x' + screen.height;
-document.getElementById("counter").appendChild(resolution);
-
-var loc = (document.location.href).match(/.*\/(.+)/)[1];
-var elem = document.getElementById(loc);
-if (elem != null) elem.classList.add("target");
