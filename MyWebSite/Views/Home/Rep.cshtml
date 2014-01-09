@@ -13,7 +13,8 @@
 
 <div class="rep">
     @{
-        var reports = DataBaseReader.GetReports();
+        var dbreader = new DataBaseReader();
+        var reports = dbreader.GetReports();
         foreach (var report in reports)
         {
             var user = VKapi.Interact(report.uid);

@@ -39,15 +39,16 @@ namespace MyWebSite.Controllers
         {
             try
             {
+                var dbreader = new DataBaseReader();
                 var text = Request["report_text"];
                 var uid = Request["uid"];
                 var secret = Request["secret"];
                 var type = Request["type"];
                 var id = Request["id"];
                 var res = "empty";
-                if (type == "edit") {res = DataBaseReader.EditReport(text, secret, uid, Int32.Parse(id)).ToString();}
-                if (type == "send") {res = DataBaseReader.PostReport(text, uid, secret).ToString();}
-                if (type == "delete") {res = DataBaseReader.DeleteReport(secret, uid, Int32.Parse(id)).ToString(); }
+                if (type == "edit") {res = dbreader.EditReport(text, secret, uid, Int32.Parse(id)).ToString();}
+                if (type == "send") {res = dbreader.PostReport(text, uid, secret).ToString();}
+                if (type == "delete") {res = dbreader.DeleteReport(secret, uid, Int32.Parse(id)).ToString(); }
                 //return Json(new { result = res, id = uid, content = text, typ = type, secrt = secret }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)

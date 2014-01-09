@@ -14,10 +14,11 @@ namespace MyWebSite.Controllers
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
             var uid = Request["uid"];
-            DataBaseReader.IncCounter(uid);
-            var last_date = DataBaseReader.GetLastDate(uid);
-            DataBaseReader.SetLastDate(uid);
-            return Json(new {secret = DataBaseReader.GenerateSecret(uid), count = DataBaseReader.getAllCounter(uid), last = last_date, today = DataBaseReader.GetTodayCounter(uid)}, JsonRequestBehavior.AllowGet);
+            var dbreader = new DataBaseReader();
+            dbreader.IncCounter(uid);
+            var last_date = dbreader.GetLastDate(uid);
+            dbreader.SetLastDate(uid);
+            return Json(new {secret = dbreader.GenerateSecret(uid), count = dbreader.getAllCounter(uid), last = last_date, today = dbreader.GetTodayCounter(uid)}, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Time()

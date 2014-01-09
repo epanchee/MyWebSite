@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -7,9 +9,9 @@ namespace MyWebSite.Models
 {
     public class DataBaseReader
     {
-        private static readonly TFbaseDataContext Context = new TFbaseDataContext("Server=tcp:d1pvugg7sy.database.windows.net,1433;Database=TFbase;User ID=tfsite;Password=Rewq54321;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;");
+        private readonly TFbaseDataContext Context = new TFbaseDataContext("Server=tcp:d1pvugg7sy.database.windows.net,1433;Database=TFbase;User ID=tfsite;Password=Rewq54321;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;");
 
-        private static String CalculateMD5Hash(string input)
+        private String CalculateMD5Hash(string input)
         {
             // step 1, calculate MD5 hash from input
             MD5 md5 = System.Security.Cryptography.MD5.Create();
@@ -25,7 +27,7 @@ namespace MyWebSite.Models
             return sb.ToString();
         }
 
-        public static String getAllCounter(String uid)
+        public String getAllCounter(String uid)
         {
             var result = Context.Counter.First(p => p.uid == uid);
             var ret = result.count;
@@ -33,7 +35,7 @@ namespace MyWebSite.Models
             return ret + "";
         }
 
-        public static void IncCounter(String uid)
+        public void IncCounter(String uid)
         {
             if (Context.Counter.Select(t => t.uid).Contains(uid))
             {
@@ -58,7 +60,7 @@ namespace MyWebSite.Models
             Context.Connection.Close();
         }
 
-        public static String GenerateSecret(String uid)
+        public String GenerateSecret(String uid)
         {
             var result = Context.Counter.First(p => p.uid == uid);
             var secret = result.secret = CalculateMD5Hash(uid + DateTime.Now);
@@ -67,7 +69,7 @@ namespace MyWebSite.Models
             return secret;
         }
 
-        public static String GetLastDate(String uid)
+        public String GetLastDate(String uid)
         {
             var result = Context.Counter.First(p => p.uid == uid);
             var ret = result.last;
@@ -75,7 +77,7 @@ namespace MyWebSite.Models
             return ret + "";
         }
 
-        public static void SetLastDate(String uid)
+        public void SetLastDate(String uid)
         {
             if (Context.Counter.Select(t => t.uid).Contains(uid))
             {
@@ -93,7 +95,7 @@ namespace MyWebSite.Models
             Context.Connection.Close();
         }
 
-        public static String GetTodayCounter(string uid)
+        public String GetTodayCounter(string uid)
         {
             var result = Context.Counter.First(p => p.uid == uid);
             var ret = result.today;
@@ -101,12 +103,14 @@ namespace MyWebSite.Models
             return ret + "";
         }
 
-        public static IQueryable<Reports> GetReports()
+        public List<Reports> GetReports()
         {
-            return from r in Context.Reports select r;
+            var ret = Context.Reports.ToList();
+            Context.Connection.Close();
+            return ret;
         }
 
-        public static bool PostReport(String text, String uid, String secret)
+        public bool PostReport(String text, String uid, String secret)
         {
             if (Context.Counter.Select(t => t.uid).Contains(uid))
             {
@@ -124,7 +128,7 @@ namespace MyWebSite.Models
             return false;
         }
 
-        public static String GetReport(int id)
+        public String GetReport(int id)
         {
             var r = Context.Reports.First(p => p.Id == id);
             var res = r.content;
@@ -132,7 +136,7 @@ namespace MyWebSite.Models
             return res;
         }
 
-        public static bool EditReport(string text, string secret, string uid, int id)
+        public bool EditReport(string text, string secret, string uid, int id)
         {
             if (Context.Counter.Select(t => t.uid).Contains(uid))
             {
@@ -150,7 +154,7 @@ namespace MyWebSite.Models
             return false;
         }
 
-        public static String DeleteReport(string secret, string uid, int id)
+        public String DeleteReport(string secret, string uid, int id)
         {
             if (Context.Counter.Select(t => t.uid).Contains(uid))
             {
