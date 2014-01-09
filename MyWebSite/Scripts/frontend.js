@@ -1,12 +1,4 @@
-﻿var loc = (document.location.href).match(/.*\/(.+)/)[1];
-var elem = document.getElementById(loc);
-if (elem != null) elem.classList.add("target");
-
-var resolution = document.createElement('div');
-resolution.textContent = 'Разрешение ' + screen.width + 'x' + screen.height;
-document.getElementById("counter").appendChild(resolution);
-
-function getXmlHttp() {
+﻿function getXmlHttp() {
     try {
         return new ActiveXObject("Msxml2.XMLHTTP");
     } catch (e) {
@@ -77,3 +69,11 @@ VK.Auth.getLoginStatus(function (response) {
         whatTimeIsIt();
     }
 });
+
+var resolution = document.createElement('div');
+resolution.textContent = 'Разрешение ' + screen.width + 'x' + screen.height;
+document.getElementById("counter").appendChild(resolution);
+
+var loc = (document.location.href).match(/.*\/(.+)/)[1];
+var elem = document.getElementById(loc);
+if (elem != null) elem.classList.add("target");
