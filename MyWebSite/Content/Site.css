@@ -33,15 +33,10 @@ input , textarea {border: 1px solid #b71;}
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
-.secret_box {
-    display: none;
-}
-#vote_button {
-    width: 200px;
-}
-#vote_content {
-    min-height: 200px;
-}
+.secret_box {display: none;}
+#vote_button {width: 200px;}
+#vote_content {min-height: 200px;}
+#voting{margin-bottom: 2%}
 .button {
     cursor: pointer;
     padding: 0 5px;
