@@ -17,7 +17,8 @@ namespace MyWebSite.Controllers
             var dbreader = new DataBaseReader();
             var last_date = dbreader.GetLastDate(uid);
             var last_using = dbreader.GetLastUsingDate(uid);
-            if (last_using == null || (DateTime.Now - last_using.Value).Minutes > 10)
+            if (last_using == null || (TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id,
+                    "Ekaterinburg Standard Time") - last_using.Value).Minutes > 10)
             {
                 dbreader.SetLastDate(uid);
                 dbreader.IncCounter(uid);                
