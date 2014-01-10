@@ -43,6 +43,17 @@ namespace MyWebSite.Models
             if (Context.Counter.Select(t => t.uid).Contains(uid))
             {
                 var result = Context.Counter.First(p => p.uid == uid);
+
+                // если пользователь все еще на странице
+                if (DateTime.Now - result.last.Value.Date < TimeSpan.FromMinutes(10))
+                {
+                    Context.Connection.Close();
+                    return;
+                }
+
+                {
+                    
+                }
                 result.count++;
                 if (TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id,
                     "Ekaterinburg Standard Time").Date == result.last.Value.Date)
