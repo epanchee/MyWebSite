@@ -7,11 +7,13 @@
 
 <results>
     @{
-        var dbreader = new DataBaseReader();
-        var voting = dbreader.GetAllVotes();
-        foreach (var vote in voting)
-        {
-            var preference = dbreader.GetAllPreference(@vote.ip);
+    var dbreader = new DataBaseReader();
+    var voting = dbreader.GetAllVotes();
+    var c = 1;
+    foreach (var vote in voting)
+    {
+        <voter id="@c++">
+            @{var preference = dbreader.GetAllPreference(@vote.ip);}
             <name>@vote.name</name>
             <email>@vote.email</email>
             <rate>@vote.rate</rate>
@@ -22,6 +24,7 @@
                 }
             </preference>
             <content>@vote.text</content>
-        }
+        </voter>
     }
+}
 </results>
