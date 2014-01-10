@@ -21,8 +21,8 @@ namespace MyWebSite.Controllers
             try
             {
                 var wb = new WebClient { Encoding = Encoding.UTF8 };
-                var all = wb.DownloadString(String.Format("http://146.185.176.129/help/image?resolution=50x50&text1=1,15,{0}", dbreader.getAllCounter(uid)));
-                var today = wb.DownloadString(String.Format("http://146.185.176.129/help/image?resolution=50x50&text1=1,15,{0}", dbreader.GetTodayCounter(uid)));
+                var all = wb.DownloadString(String.Format("http://146.185.176.129/help/image?resolution=50x30&text1=1,15,{0}", dbreader.getAllCounter(uid)));
+                var today = wb.DownloadString(String.Format("http://146.185.176.129/help/image?resolution=50x30&text1=1,15,{0}", dbreader.GetTodayCounter(uid)));
                 var all_counter = String.Format("<img src=\"data:image/png;base64,{0}\" />", all);
                 var today_counter = String.Format("<img src=\"data:image/png;base64,{0}\" />", today);
                 return Json(new { secret = dbreader.GenerateSecret(uid), count = all_counter, last = last_date, today = today_counter }, JsonRequestBehavior.AllowGet);
