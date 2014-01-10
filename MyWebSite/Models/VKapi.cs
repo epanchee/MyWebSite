@@ -11,8 +11,16 @@ namespace MyWebSite.Models
         {
             var wb = new WebClient();
             wb.Encoding = Encoding.UTF8;
-            var response = wb.DownloadString("https://api.vk.com/method/getProfiles?uid=" + uid + "&fields=photo_100");
-            return Json.Decode(response.Substring(response.IndexOf('[') + 1, (response.IndexOf(']') - response.IndexOf('[') - 1)));
+            try
+            {
+                var response = wb.DownloadString("https://api.vk.com/method/getProfiles?uid=" + uid + "&fields=photo_100");
+                return Json.Decode(response.Substring(response.IndexOf('[') + 1, (response.IndexOf(']') - response.IndexOf('[') - 1)));
+            }
+            catch (Exception)
+            {
+            }
+
+            return Json.Encode(new {firstname = "error"});
         }
     }
 }
