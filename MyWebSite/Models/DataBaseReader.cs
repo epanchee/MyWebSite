@@ -81,6 +81,14 @@ namespace MyWebSite.Models
             return ret;
         }
 
+        public DateTime? GetLastDate(String uid)
+        {
+            var result = Context.Counter.First(p => p.uid == uid);
+            var ret = result.last;
+            Context.Connection.Close();
+            return ret;
+        }
+
         public void SetLastUsingDate(string uid)
         {
             if (Context.Counter.Select(t => t.uid).Contains(uid))
