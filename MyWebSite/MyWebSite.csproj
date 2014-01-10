@@ -273,6 +273,8 @@
     <Content Include="Views\Users\EditReport.cshtml" />
     <Content Include="Views\Users\Voting.cshtml" />
     <Content Include="Views\Home\Vote.cshtml" />
+    <Content Include="Views\Home\Voted.cshtml" />
+    <Content Include="Views\Home\VoteResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -77,7 +77,12 @@ namespace MyWebSite.Controllers
         [HttpGet]
         public ActionResult Vote()
         {
-            return View();
+            var dbreader = new DataBaseReader();
+            if (!dbreader.CheckIPinVote(Request.UserHostAddress))
+            {
+                return View();
+            }
+            return RedirectToAction("Voted");
         }
 
         [HttpPost]
@@ -97,6 +102,8 @@ namespace MyWebSite.Controllers
                         rate = rt,
                         text = Request["text"]
                     }, Request["secret"], Request.UserHostAddress);
+                dbreader.InsertPreference(Request["pref"].Split(','), Request.UserHostAddress);
+                return RedirectToAction("Voted");
             }
             catch (Exception e)
             {
@@ -104,6 +111,16 @@ namespace MyWebSite.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Voted()
+        {
+            return View();
+        }
+
+        public ActionResult VoteResult()
+        {
+            return View();
         }
     }
 }

@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web.UI.WebControls;
+using System.Xml;
 
 namespace MyWebSite.Models
 {
@@ -195,6 +197,38 @@ namespace MyWebSite.Models
             {
                 ret[i-1] = Context.Voting.Count(t => t.rate == i);
             }
+            Context.Connection.Close();
+            return ret;
+        }
+
+        public bool CheckIPinVote(string ip)
+        {
+            return Context.Voting.Select(t => t.ip).Contains(ip);
+        }
+
+        public bool InsertPreference(string [] prefs, string _name)
+        {
+            var flag = false;
+            foreach (var pref in prefs)
+            {
+                Context.PrefMusic.InsertOnSubmit(new PrefMusic() {vote_ip = _name, style = pref});
+                if (!flag) flag = true;
+            }
+            Context.SubmitChanges();
+            Context.Connection.Close();
+            return flag;
+        }
+
+        public List<Voting> GetAllVotes()
+        {
+            var ret = Context.Voting.ToList();
+            Context.Connection.Close();
+            return ret;
+        }
+
+        public List<PrefMusic> GetAllPreference(String ip)
+        {
+            var ret = Context.PrefMusic.Where(t => t.vote_ip == ip).ToList();
             Context.Connection.Close();
             return ret;
         }

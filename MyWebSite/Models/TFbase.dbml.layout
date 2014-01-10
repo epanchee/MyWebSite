@@ -14,11 +14,24 @@
         <elementListCompartment Id="0a40fad5-05ad-4b21-aa74-f5c643c65caa" absoluteBounds="1.8900000000000001, 1.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="6046b005-8f0b-40ef-a74b-c6b89535000c" absoluteBounds="4.25, 0.625, 2, 1.7708968098958331">
-      <DataClassMoniker Name="/TFbaseDataContext/Voting" />
+    <classShape Id="73800416-94ae-4873-aafd-93ed770a5107" absoluteBounds="3.25, 0.5, 2, 1.3862939453125">
+      <DataClassMoniker Name="/TFbaseDataContext/PrefMusic" />
       <nestedChildShapes>
-        <elementListCompartment Id="763fde17-696c-4519-b614-badd01e16749" absoluteBounds="4.265, 1.085, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="2bd1c29b-8af6-4a3a-815d-3e85c06003c8" absoluteBounds="3.265, 0.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="5a85ab57-1bd5-4c74-a983-ba7193a15cf9" absoluteBounds="6.375, 0.5, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/TFbaseDataContext/Voting" />
+      <nestedChildShapes>
+        <elementListCompartment Id="eddc670e-66ba-43cd-be8e-4c8936c37df5" absoluteBounds="6.39, 0.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.375 : 1.19314697265625); (5.25 : 1.19314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TFbaseDataContext/Voting/Voting_PrefMusic" />
+      <nodes>
+        <classShapeMoniker Id="5a85ab57-1bd5-4c74-a983-ba7193a15cf9" />
+        <classShapeMoniker Id="73800416-94ae-4873-aafd-93ed770a5107" />
+      </nodes>
+    </associationConnector>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

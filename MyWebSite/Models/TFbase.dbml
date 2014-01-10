@@ -16,13 +16,22 @@
       <Column Name="secret" Type="System.String" DbType="NChar(32)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.PrefMusic" Member="PrefMusic">
+    <Type Name="PrefMusic">
+      <Column Name="vote_ip" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="style" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="Voting_PrefMusic" Member="Voting" ThisKey="vote_ip" OtherKey="ip" Type="Voting" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.Voting" Member="Voting">
     <Type Name="Voting">
-      <Column Name="ip" Type="System.String" DbType="NChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="name" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
-      <Column Name="email" Type="System.String" DbType="NChar(40)" CanBeNull="true" />
+      <Column Name="ip" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
       <Column Name="rate" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="text" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Voting_PrefMusic" Member="PrefMusic" ThisKey="ip" OtherKey="vote_ip" Type="PrefMusic" />
     </Type>
   </Table>
 </Database>

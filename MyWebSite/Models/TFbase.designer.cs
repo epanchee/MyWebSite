@@ -36,6 +36,9 @@ namespace MyWebSite.Models
     partial void InsertCounter(Counter instance);
     partial void UpdateCounter(Counter instance);
     partial void DeleteCounter(Counter instance);
+    partial void InsertPrefMusic(PrefMusic instance);
+    partial void UpdatePrefMusic(PrefMusic instance);
+    partial void DeletePrefMusic(PrefMusic instance);
     partial void InsertVoting(Voting instance);
     partial void UpdateVoting(Voting instance);
     partial void DeleteVoting(Voting instance);
@@ -78,6 +81,14 @@ namespace MyWebSite.Models
 			get
 			{
 				return this.GetTable<Counter>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PrefMusic> PrefMusic
+		{
+			get
+			{
+				return this.GetTable<PrefMusic>();
 			}
 		}
 		
@@ -382,6 +393,157 @@ namespace MyWebSite.Models
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PrefMusic")]
+	public partial class PrefMusic : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _vote_ip;
+		
+		private string _style;
+		
+		private int _id;
+		
+		private EntityRef<Voting> _Voting;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onvote_ipChanging(string value);
+    partial void Onvote_ipChanged();
+    partial void OnstyleChanging(string value);
+    partial void OnstyleChanged();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    #endregion
+		
+		public PrefMusic()
+		{
+			this._Voting = default(EntityRef<Voting>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_vote_ip", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string vote_ip
+		{
+			get
+			{
+				return this._vote_ip;
+			}
+			set
+			{
+				if ((this._vote_ip != value))
+				{
+					if (this._Voting.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onvote_ipChanging(value);
+					this.SendPropertyChanging();
+					this._vote_ip = value;
+					this.SendPropertyChanged("vote_ip");
+					this.Onvote_ipChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_style", DbType="NVarChar(20)")]
+		public string style
+		{
+			get
+			{
+				return this._style;
+			}
+			set
+			{
+				if ((this._style != value))
+				{
+					this.OnstyleChanging(value);
+					this.SendPropertyChanging();
+					this._style = value;
+					this.SendPropertyChanged("style");
+					this.OnstyleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Voting_PrefMusic", Storage="_Voting", ThisKey="vote_ip", OtherKey="ip", IsForeignKey=true)]
+		public Voting Voting
+		{
+			get
+			{
+				return this._Voting.Entity;
+			}
+			set
+			{
+				Voting previousValue = this._Voting.Entity;
+				if (((previousValue != value) 
+							|| (this._Voting.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Voting.Entity = null;
+						previousValue.PrefMusic.Remove(this);
+					}
+					this._Voting.Entity = value;
+					if ((value != null))
+					{
+						value.PrefMusic.Add(this);
+						this._vote_ip = value.ip;
+					}
+					else
+					{
+						this._vote_ip = default(string);
+					}
+					this.SendPropertyChanged("Voting");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Voting")]
 	public partial class Voting : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -397,6 +559,8 @@ namespace MyWebSite.Models
 		private System.Nullable<int> _rate;
 		
 		private string _text;
+		
+		private EntitySet<PrefMusic> _PrefMusic;
 		
     #region Определения метода расширяемости
     partial void OnLoaded();
@@ -416,10 +580,11 @@ namespace MyWebSite.Models
 		
 		public Voting()
 		{
+			this._PrefMusic = new EntitySet<PrefMusic>(new Action<PrefMusic>(this.attach_PrefMusic), new Action<PrefMusic>(this.detach_PrefMusic));
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ip", DbType="NChar(20) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ip", DbType="NVarChar(20) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string ip
 		{
 			get
@@ -439,7 +604,7 @@ namespace MyWebSite.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NChar(40)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(40)")]
 		public string name
 		{
 			get
@@ -459,7 +624,7 @@ namespace MyWebSite.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_email", DbType="NChar(40)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_email", DbType="NVarChar(40)")]
 		public string email
 		{
 			get
@@ -519,6 +684,19 @@ namespace MyWebSite.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Voting_PrefMusic", Storage="_PrefMusic", ThisKey="ip", OtherKey="vote_ip")]
+		public EntitySet<PrefMusic> PrefMusic
+		{
+			get
+			{
+				return this._PrefMusic;
+			}
+			set
+			{
+				this._PrefMusic.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -537,6 +715,18 @@ namespace MyWebSite.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_PrefMusic(PrefMusic entity)
+		{
+			this.SendPropertyChanging();
+			entity.Voting = this;
+		}
+		
+		private void detach_PrefMusic(PrefMusic entity)
+		{
+			this.SendPropertyChanging();
+			entity.Voting = null;
 		}
 	}
 }
