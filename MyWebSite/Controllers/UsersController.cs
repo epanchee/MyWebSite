@@ -15,9 +15,13 @@ namespace MyWebSite.Controllers
             Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
             var uid = Request["uid"];
             var dbreader = new DataBaseReader();
-            dbreader.IncCounter(uid);
             var last_date = dbreader.GetLastDate(uid);
-            dbreader.SetLastDate(uid);
+            if (!((last_date - DateTime.Now).Minutes < 10))
+            {
+                dbreader.SetLastDate(uid);
+                dbreader.IncCounter(uid);                
+            }
+
             try
             {
                 var wb = new WebClient { Encoding = Encoding.UTF8 };
