@@ -15,8 +15,8 @@
 function ajaxSuccess(status, text) {
     if (status === 200) {
         var obj = JSON.parse(text);
-        document.getElementById("all").textContent = obj.count;
-        document.getElementById("today").textContent = obj.today;
+        document.getElementById("all").innerHTML = obj.count;
+        document.getElementById("today").innerHTML = obj.today;
         if (obj.last) document.getElementById("last").textContent = obj.last;
         document.cookie = "secret=" + obj.secret;
     }

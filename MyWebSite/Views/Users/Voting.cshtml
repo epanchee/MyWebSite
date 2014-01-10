@@ -12,7 +12,12 @@
     }
     catch (Exception e)
     {
-        <div>Some error</div>
+        var rates = dbreader.GetRateVotesCount();
+        <div>Отлично: @rates[4]</div>
+        <div>Хорошо: @rates[3]</div>
+        <div>Пойдет: @rates[2]</div>
+        <div>Не очень: @rates[1]</div>
+        <div>Ужас: @rates[0]</div>
     }
     
 }
