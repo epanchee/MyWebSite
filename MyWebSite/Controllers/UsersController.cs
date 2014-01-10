@@ -18,7 +18,7 @@ namespace MyWebSite.Controllers
             var last_date = dbreader.GetLastDate(uid);
             var last_using = dbreader.GetLastUsingDate(uid);
             dbreader.SetLastUsingDate(uid);
-            if (!((DateTime.Now - last_using.Value).Minutes < 10))
+            if (last_using == null || (DateTime.Now - last_using.Value).Minutes > 10)
             {
                 dbreader.SetLastDate(uid);
                 dbreader.IncCounter(uid);                
