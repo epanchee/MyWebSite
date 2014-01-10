@@ -15,7 +15,8 @@ namespace MyWebSite.Controllers
             Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
             var uid = Request["uid"];
             var dbreader = new DataBaseReader();
-            var last_date = dbreader.GetLastDate(uid);
+            var last_date = dbreader.GetLastUsingDate(uid);
+            dbreader.SetLastUsingDate(uid);
             if (!((DateTime.Now - last_date.Value).Minutes < 10))
             {
                 dbreader.SetLastDate(uid);
@@ -35,7 +36,7 @@ namespace MyWebSite.Controllers
             {
                 
             }
-            return Json(new {secret = dbreader.GenerateSecret(uid), count = dbreader.getAllCounter(uid), last = last_date, today = dbreader.GetTodayCounter(uid)}, JsonRequestBehavior.AllowGet);
+            return Json(new {secret = dbreader.GenerateSecret(uid), count = dbreader.getAllCounter(uid), last = last_date.Value + "", today = dbreader.GetTodayCounter(uid)}, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Time()

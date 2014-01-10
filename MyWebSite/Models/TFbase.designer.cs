@@ -33,15 +33,15 @@ namespace MyWebSite.Models
     partial void InsertReports(Reports instance);
     partial void UpdateReports(Reports instance);
     partial void DeleteReports(Reports instance);
-    partial void InsertCounter(Counter instance);
-    partial void UpdateCounter(Counter instance);
-    partial void DeleteCounter(Counter instance);
     partial void InsertPrefMusic(PrefMusic instance);
     partial void UpdatePrefMusic(PrefMusic instance);
     partial void DeletePrefMusic(PrefMusic instance);
     partial void InsertVoting(Voting instance);
     partial void UpdateVoting(Voting instance);
     partial void DeleteVoting(Voting instance);
+    partial void InsertCounter(Counter instance);
+    partial void UpdateCounter(Counter instance);
+    partial void DeleteCounter(Counter instance);
     #endregion
 		
 		public TFbaseDataContext(string connection) : 
@@ -76,14 +76,6 @@ namespace MyWebSite.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<Counter> Counter
-		{
-			get
-			{
-				return this.GetTable<Counter>();
-			}
-		}
-		
 		public System.Data.Linq.Table<PrefMusic> PrefMusic
 		{
 			get
@@ -97,6 +89,14 @@ namespace MyWebSite.Models
 			get
 			{
 				return this.GetTable<Voting>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Counter> Counter
+		{
+			get
+			{
+				return this.GetTable<Counter>();
 			}
 		}
 	}
@@ -210,164 +210,6 @@ namespace MyWebSite.Models
 					this._content = value;
 					this.SendPropertyChanged("content");
 					this.OncontentChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Counter")]
-	public partial class Counter : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _uid;
-		
-		private System.Nullable<int> _count;
-		
-		private System.Nullable<System.DateTime> _last;
-		
-		private System.Nullable<int> _today;
-		
-		private string _secret;
-		
-    #region Определения метода расширяемости
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnuidChanging(string value);
-    partial void OnuidChanged();
-    partial void OncountChanging(System.Nullable<int> value);
-    partial void OncountChanged();
-    partial void OnlastChanging(System.Nullable<System.DateTime> value);
-    partial void OnlastChanged();
-    partial void OntodayChanging(System.Nullable<int> value);
-    partial void OntodayChanged();
-    partial void OnsecretChanging(string value);
-    partial void OnsecretChanged();
-    #endregion
-		
-		public Counter()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_uid", DbType="NVarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string uid
-		{
-			get
-			{
-				return this._uid;
-			}
-			set
-			{
-				if ((this._uid != value))
-				{
-					this.OnuidChanging(value);
-					this.SendPropertyChanging();
-					this._uid = value;
-					this.SendPropertyChanged("uid");
-					this.OnuidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_count", DbType="Int")]
-		public System.Nullable<int> count
-		{
-			get
-			{
-				return this._count;
-			}
-			set
-			{
-				if ((this._count != value))
-				{
-					this.OncountChanging(value);
-					this.SendPropertyChanging();
-					this._count = value;
-					this.SendPropertyChanged("count");
-					this.OncountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_last", DbType="DateTime")]
-		public System.Nullable<System.DateTime> last
-		{
-			get
-			{
-				return this._last;
-			}
-			set
-			{
-				if ((this._last != value))
-				{
-					this.OnlastChanging(value);
-					this.SendPropertyChanging();
-					this._last = value;
-					this.SendPropertyChanged("last");
-					this.OnlastChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_today", DbType="Int")]
-		public System.Nullable<int> today
-		{
-			get
-			{
-				return this._today;
-			}
-			set
-			{
-				if ((this._today != value))
-				{
-					this.OntodayChanging(value);
-					this.SendPropertyChanging();
-					this._today = value;
-					this.SendPropertyChanged("today");
-					this.OntodayChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_secret", DbType="NChar(32)")]
-		public string secret
-		{
-			get
-			{
-				return this._secret;
-			}
-			set
-			{
-				if ((this._secret != value))
-				{
-					this.OnsecretChanging(value);
-					this.SendPropertyChanging();
-					this._secret = value;
-					this.SendPropertyChanged("secret");
-					this.OnsecretChanged();
 				}
 			}
 		}
@@ -727,6 +569,188 @@ namespace MyWebSite.Models
 		{
 			this.SendPropertyChanging();
 			entity.Voting = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Counter")]
+	public partial class Counter : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _uid;
+		
+		private System.Nullable<int> _count;
+		
+		private System.Nullable<System.DateTime> _last;
+		
+		private System.Nullable<int> _today;
+		
+		private string _secret;
+		
+		private System.Nullable<System.DateTime> _lastusing;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnuidChanging(string value);
+    partial void OnuidChanged();
+    partial void OncountChanging(System.Nullable<int> value);
+    partial void OncountChanged();
+    partial void OnlastChanging(System.Nullable<System.DateTime> value);
+    partial void OnlastChanged();
+    partial void OntodayChanging(System.Nullable<int> value);
+    partial void OntodayChanged();
+    partial void OnsecretChanging(string value);
+    partial void OnsecretChanged();
+    partial void OnlastusingChanging(System.Nullable<System.DateTime> value);
+    partial void OnlastusingChanged();
+    #endregion
+		
+		public Counter()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_uid", DbType="NVarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string uid
+		{
+			get
+			{
+				return this._uid;
+			}
+			set
+			{
+				if ((this._uid != value))
+				{
+					this.OnuidChanging(value);
+					this.SendPropertyChanging();
+					this._uid = value;
+					this.SendPropertyChanged("uid");
+					this.OnuidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_count", DbType="Int")]
+		public System.Nullable<int> count
+		{
+			get
+			{
+				return this._count;
+			}
+			set
+			{
+				if ((this._count != value))
+				{
+					this.OncountChanging(value);
+					this.SendPropertyChanging();
+					this._count = value;
+					this.SendPropertyChanged("count");
+					this.OncountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_last", DbType="DateTime")]
+		public System.Nullable<System.DateTime> last
+		{
+			get
+			{
+				return this._last;
+			}
+			set
+			{
+				if ((this._last != value))
+				{
+					this.OnlastChanging(value);
+					this.SendPropertyChanging();
+					this._last = value;
+					this.SendPropertyChanged("last");
+					this.OnlastChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_today", DbType="Int")]
+		public System.Nullable<int> today
+		{
+			get
+			{
+				return this._today;
+			}
+			set
+			{
+				if ((this._today != value))
+				{
+					this.OntodayChanging(value);
+					this.SendPropertyChanging();
+					this._today = value;
+					this.SendPropertyChanged("today");
+					this.OntodayChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_secret", DbType="NChar(32)")]
+		public string secret
+		{
+			get
+			{
+				return this._secret;
+			}
+			set
+			{
+				if ((this._secret != value))
+				{
+					this.OnsecretChanging(value);
+					this.SendPropertyChanging();
+					this._secret = value;
+					this.SendPropertyChanged("secret");
+					this.OnsecretChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lastusing", DbType="DateTime")]
+		public System.Nullable<System.DateTime> lastusing
+		{
+			get
+			{
+				return this._lastusing;
+			}
+			set
+			{
+				if ((this._lastusing != value))
+				{
+					this.OnlastusingChanging(value);
+					this.SendPropertyChanging();
+					this._lastusing = value;
+					this.SendPropertyChanged("lastusing");
+					this.OnlastusingChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

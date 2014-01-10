@@ -73,12 +73,37 @@ namespace MyWebSite.Models
             return secret;
         }
 
-        public DateTime? GetLastDate(String uid)
+        public DateTime? GetLastUsingDate(String uid)
         {
             var result = Context.Counter.First(p => p.uid == uid);
-            var ret = result.last;
+            var ret = result.lastusing;
             Context.Connection.Close();
             return ret;
+        }
+
+        public void SetLastUsingDate(string uid)
+        {
+            if (Context.Counter.Select(t => t.uid).Contains(uid))
+            {
+                var result = Context.Counter.First(p => p.uid == uid);
+                result.lastusing = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id,
+                    "Ekaterinburg Standard Time");
+                Context.SubmitChanges();
+            }
+            else
+            {
+                var now = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id,
+                    "Ekaterinburg Standard Time");
+                var record = new Counter
+                {
+                    uid = uid,
+                    count = 1,
+                    lastusing = now,
+                    last = now
+                };
+                Context.Counter.InsertOnSubmit(record);
+            }
+            Context.Connection.Close();
         }
 
         public void SetLastDate(String uid)
