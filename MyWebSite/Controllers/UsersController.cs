@@ -17,12 +17,12 @@ namespace MyWebSite.Controllers
             var dbreader = new DataBaseReader();
             var last_date = dbreader.GetLastDate(uid);
             var last_using = dbreader.GetLastUsingDate(uid);
-            dbreader.SetLastUsingDate(uid);
             if (last_using == null || (DateTime.Now - last_using.Value).Minutes > 10)
             {
                 dbreader.SetLastDate(uid);
                 dbreader.IncCounter(uid);                
             }
+            dbreader.SetLastUsingDate(uid);
 
             try
             {
