@@ -73,7 +73,7 @@ namespace MyWebSite.Models
             return secret;
         }
 
-        public DateTime GetLastDate(String uid)
+        public DateTime? GetLastDate(String uid)
         {
             var result = Context.Counter.First(p => p.uid == uid);
             var ret = result.last;
