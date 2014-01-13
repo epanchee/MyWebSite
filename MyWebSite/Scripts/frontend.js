@@ -15,9 +15,10 @@
 function ajaxSuccess(status, text) {
     if (status === 200) {
         var obj = JSON.parse(text);
-        document.getElementById("all").innerHTML = obj.count;
-        document.getElementById("today").innerHTML = obj.today;
-        if (obj.last) document.getElementById("last").textContent = obj.last;
+        // --- DEPRECATED ---
+        //document.getElementById("all").innerHTML = obj.count;
+        //document.getElementById("today").innerHTML = obj.today;
+        //if (obj.last) document.getElementById("last").textContent = obj.last;
         document.cookie = "secret=" + obj.secret;
     }
 }
@@ -84,10 +85,11 @@ VK.Auth.getLoginStatus(function (response) {
         document.cookie = "uid=" + response.session['mid'];
         ajaxCounter(response.session['mid']);
     } else {
-        console.log(response.session);
-        document.getElementById("all").textContent = 1;
-        document.getElementById("today").textContent = 1;
-        whatTimeIsIt();
+        // --- DEPRECATED ---
+        //console.log(response.session);
+        //document.getElementById("all").textContent = 1;
+        //document.getElementById("today").textContent = 1;
+        //whatTimeIsIt();
     }
 });
 

@@ -42,6 +42,9 @@ namespace MyWebSite.Models
     partial void InsertCounter(Counter instance);
     partial void UpdateCounter(Counter instance);
     partial void DeleteCounter(Counter instance);
+    partial void Insertip_counter(ip_counter instance);
+    partial void Updateip_counter(ip_counter instance);
+    partial void Deleteip_counter(ip_counter instance);
     #endregion
 		
 		public TFbaseDataContext(string connection) : 
@@ -97,6 +100,14 @@ namespace MyWebSite.Models
 			get
 			{
 				return this.GetTable<Counter>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ip_counter> ip_counter
+		{
+			get
+			{
+				return this.GetTable<ip_counter>();
 			}
 		}
 	}
@@ -729,6 +740,116 @@ namespace MyWebSite.Models
 					this._lastusing = value;
 					this.SendPropertyChanged("lastusing");
 					this.OnlastusingChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ip_counter")]
+	public partial class ip_counter : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _ip;
+		
+		private System.Nullable<System.DateTime> _last_using;
+		
+		private System.Nullable<System.DateTime> _last_visit;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnipChanging(string value);
+    partial void OnipChanged();
+    partial void Onlast_usingChanging(System.Nullable<System.DateTime> value);
+    partial void Onlast_usingChanged();
+    partial void Onlast_visitChanging(System.Nullable<System.DateTime> value);
+    partial void Onlast_visitChanged();
+    #endregion
+		
+		public ip_counter()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ip", DbType="NVarChar(20) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string ip
+		{
+			get
+			{
+				return this._ip;
+			}
+			set
+			{
+				if ((this._ip != value))
+				{
+					this.OnipChanging(value);
+					this.SendPropertyChanging();
+					this._ip = value;
+					this.SendPropertyChanged("ip");
+					this.OnipChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_last_using", DbType="DateTime")]
+		public System.Nullable<System.DateTime> last_using
+		{
+			get
+			{
+				return this._last_using;
+			}
+			set
+			{
+				if ((this._last_using != value))
+				{
+					this.Onlast_usingChanging(value);
+					this.SendPropertyChanging();
+					this._last_using = value;
+					this.SendPropertyChanged("last_using");
+					this.Onlast_usingChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_last_visit", DbType="DateTime")]
+		public System.Nullable<System.DateTime> last_visit
+		{
+			get
+			{
+				return this._last_visit;
+			}
+			set
+			{
+				if ((this._last_visit != value))
+				{
+					this.Onlast_visitChanging(value);
+					this.SendPropertyChanging();
+					this._last_visit = value;
+					this.SendPropertyChanged("last_visit");
+					this.Onlast_visitChanged();
 				}
 			}
 		}

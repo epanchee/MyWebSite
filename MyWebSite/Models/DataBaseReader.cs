@@ -17,8 +17,8 @@ namespace MyWebSite.Models
         private String CalculateMD5Hash(string input)
         {
             // step 1, calculate MD5 hash from input
-            MD5 md5 = System.Security.Cryptography.MD5.Create();
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+            MD5 md5 = MD5.Create();
+            byte[] inputBytes = Encoding.ASCII.GetBytes(input);
             byte[] hash = md5.ComputeHash(inputBytes);
 
             // step 2, convert byte array to hex string
@@ -28,6 +28,15 @@ namespace MyWebSite.Models
                 sb.Append(hash[i].ToString("X2"));
             }
             return sb.ToString();
+        }
+
+        public String GenerateSecret(String uid)
+        {
+            var result = Context.Counter.First(p => p.uid == uid);
+            var secret = result.secret = CalculateMD5Hash(uid + DateTime.Now);
+            Context.SubmitChanges();
+            Context.Connection.Close();
+            return secret;
         }
 
         public String getAllCounter(String uid)
@@ -62,15 +71,6 @@ namespace MyWebSite.Models
             }
             Context.SubmitChanges();
             Context.Connection.Close();
-        }
-
-        public String GenerateSecret(String uid)
-        {
-            var result = Context.Counter.First(p => p.uid == uid);
-            var secret = result.secret = CalculateMD5Hash(uid + DateTime.Now);
-            Context.SubmitChanges();
-            Context.Connection.Close();
-            return secret;
         }
 
         public DateTime? GetLastUsingDate(String uid)
@@ -265,6 +265,73 @@ namespace MyWebSite.Models
             var ret = Context.PrefMusic.Where(t => t.vote_ip == ip).ToList();
             Context.Connection.Close();
             return ret;
+        }
+
+        public int IPgetAllCounter()
+        {
+            var ret = Context.ip_counter.Count();
+            Context.Connection.Close();
+            return ret;
+        }
+
+        public int IPGetTodayCounter()
+        {
+            var ret =
+                Context.ip_counter.Count(
+                    t =>
+                        t.last_visit.Value.Day ==
+                        TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id,
+                            "Ekaterinburg Standard Time").Day);
+            Context.Connection.Close();
+            return ret;
+        }
+
+        public void IPSetLastDate(string ip, DateTime? lastUsing)
+        {
+            var rec = Context.ip_counter.First(t => t.ip == ip);
+            rec.last_visit = lastUsing;
+            Context.Connection.Close();
+        }
+
+        public DateTime? IPGetLastDate(string ip)
+        {
+            DateTime? ret = null;
+
+            if (Context.ip_counter.Any(t => t.ip == ip))
+            {
+                ret = Context.ip_counter.First(t => t.ip == ip).last_visit.Value;
+                Context.Connection.Close();
+            }
+            else
+            {
+                var record = new ip_counter
+                {
+                    ip = ip,
+                    last_using = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id,
+                    "Ekaterinburg Standard Time"),
+                    last_visit = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id,
+                    "Ekaterinburg Standard Time")
+                };
+                Context.ip_counter.InsertOnSubmit(record);
+                Context.SubmitChanges();
+            }
+
+            return ret;
+        }
+
+        public DateTime? IPGetLastUsingDate(string ip)
+        {
+            var ret = Context.ip_counter.First(t => t.ip == ip).last_using;
+            Context.Connection.Close();
+            return ret;
+        }
+
+        public void IPSetLastUsingDate(string ip)
+        {
+            var rec = Context.ip_counter.First(t => t.ip == ip);
+            rec.last_visit = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id,
+                            "Ekaterinburg Standard Time");
+            Context.Connection.Close();
         }
     }
 }

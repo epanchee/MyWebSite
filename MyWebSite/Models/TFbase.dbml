@@ -35,4 +35,11 @@
       <Column Name="lastusing" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.ip_counter" Member="ip_counter">
+    <Type Name="ip_counter">
+      <Column Name="ip" Type="System.String" DbType="NVarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="last_using" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="last_visit" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

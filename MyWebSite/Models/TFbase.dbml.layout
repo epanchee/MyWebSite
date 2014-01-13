@@ -33,5 +33,11 @@
         <elementListCompartment Id="9391f912-470f-480b-a132-8aab85e1741c" absoluteBounds="1.3900000000000001, 2.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="be0df407-d96d-4773-bb9a-218c260907b4" absoluteBounds="0.875, 0.625, 2, 1.3862939453125">
+      <DataClassMoniker Name="/TFbaseDataContext/ip_counter" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8b126209-21c1-46d9-a309-c3d642bc20ac" absoluteBounds="0.89000000000000012, 1.085, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

@@ -134,6 +134,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CounterIP.cs" />
     <Compile Include="Models\DataBaseReader.cs" />
     <Compile Include="Models\MultimediaFunctions.cs" />
     <Compile Include="Models\TFbase.designer.cs">
