@@ -27,7 +27,7 @@
                 </div>
                 <div class="report_id">@report.Id</div>
         
-                <div class="report_content">@report.content</div>
+                <div class="report_content">@Html.Raw(report.content)</div>
                 <div class="report_date">@report.date</div>
                 <div class="report_edit" onclick="editRep(this)">Редактировать</div>
             </div>

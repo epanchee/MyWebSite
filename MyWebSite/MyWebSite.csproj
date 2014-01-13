@@ -276,6 +276,8 @@
     <Content Include="Views\Home\Vote.cshtml" />
     <Content Include="Views\Home\Voted.cshtml" />
     <Content Include="Views\Home\VoteResult.cshtml" />
+    <None Include="Properties\PublishProfiles\terraflamenco2 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\terraflamenco2 - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

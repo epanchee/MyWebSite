@@ -30,7 +30,7 @@ namespace MyWebSite.Models
 
             var last_using = dbreader.IPGetLastUsingDate(ip);
             if (last_using == null || (TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id,
-                    "Ekaterinburg Standard Time") - last_using.Value).Minutes > 10)
+                    "Ekaterinburg Standard Time") - last_using.Value).Minutes > 5)
             {
                 dbreader.IPSetLastDate(ip, last_using);
             }

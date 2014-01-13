@@ -60,7 +60,7 @@
                 @{
                     var cntobj = CounterIP.Count(Request.UserHostAddress);
                 }
-                <h3>Ваши посещения</h3> <br/>
+                <h3>Посещения</h3> <br/>
                 Всего: <div id="all">@Html.Raw(@cntobj.GetType().GetProperty("allcnt").GetValue(cntobj, null))</div> <br/>
                 Сегодня: <div id="today">@Html.Raw(@cntobj.GetType().GetProperty("todcnt").GetValue(cntobj, null))</div> <br/>
                 Последнее: <div id="last">@Html.Raw(@cntobj.GetType().GetProperty("last").GetValue(cntobj, null))</div> <br/>

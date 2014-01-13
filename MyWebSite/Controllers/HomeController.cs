@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using MyWebSite.Models;
 
 namespace MyWebSite.Controllers
@@ -34,13 +38,25 @@ namespace MyWebSite.Controllers
             return View();
         }
 
+        [ValidateInput(false)]
         [HttpPost]
         public ActionResult Rep(String a)
         {
             try
             {
                 var dbreader = new DataBaseReader();
-                var text = Request["report_text"];
+                var html = Request.Unvalidated.Form["report_text"];
+
+                #region Фильтруем только нужные теги
+                var sb = new StringBuilder(HttpUtility.HtmlEncode(html));
+                sb.Replace("&lt;b&gt;", "<b>");
+                sb.Replace("&lt;/b&gt;", "</b>");
+                sb.Replace("&lt;i&gt;", "<i>");
+                sb.Replace("&lt;/i&gt;", "</i>");
+                var text = Regex.Replace(sb.ToString(), "&lt;img(?:.*?)src=&quot;(.*?)&quot;/&gt;", "<img src=\"$1\"/>");
+                text = text.Replace("\"\"", "\"");
+                #endregion
+
                 var uid = Request["uid"];
                 var secret = Request["secret"];
                 var type = Request["type"];
@@ -53,7 +69,6 @@ namespace MyWebSite.Controllers
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
                 //return Json(new { result = e.StackTrace }, JsonRequestBehavior.AllowGet);
             }
             return RedirectToAction("rep");
