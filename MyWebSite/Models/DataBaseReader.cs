@@ -183,6 +183,7 @@ namespace MyWebSite.Models
                 var report = Context.Reports.First(p => p.Id == id);
                 report.content = text;
 
+                Context.SubmitChanges();
                 Context.Connection.Close();
                 return true;
             }
