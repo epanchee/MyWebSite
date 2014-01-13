@@ -53,8 +53,8 @@ namespace MyWebSite.Controllers
                 sb.Replace("&lt;/b&gt;", "</b>");
                 sb.Replace("&lt;i&gt;", "<i>");
                 sb.Replace("&lt;/i&gt;", "</i>");
-                var text = Regex.Replace(sb.ToString(), "&lt;img(?:.*?)src=&quot;(.*?)&quot;/&gt;", "<img src=\"$1\"/>");
-                text = text.Replace("\"\"", "\"");
+                //add Raw HTML for edit report
+                var text = Regex.Replace(sb.ToString(), "&lt;img(?:.*?)src=&quot;(.*?)&quot;(?:.*?)/&gt;", "<img src=\"$1\"/>");
                 #endregion
 
                 var uid = Request["uid"];
