@@ -12,6 +12,7 @@ namespace MyWebSite.Controllers
         {
             var uid = Request["uid"];
             var dbreader = new DataBaseReader();
+            dbreader.SetLastDate(uid);
             return Json(new {secret = dbreader.GenerateSecret(uid)}, JsonRequestBehavior.AllowGet);
         }
 

@@ -19,6 +19,7 @@ function ajaxSuccess(status, text) {
         //document.getElementById("all").innerHTML = obj.count;
         //document.getElementById("today").innerHTML = obj.today;
         //if (obj.last) document.getElementById("last").textContent = obj.last;
+        // ---
         document.cookie = "secret=" + obj.secret;
     }
 }
