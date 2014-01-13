@@ -39,6 +39,107 @@ namespace MyWebSite.Models
             return secret;
         }
 
+        public String getAllCounter(String uid)
+        {
+            var result = Context.Counter.First(p => p.uid == uid);
+            var ret = result.count;
+            Context.Connection.Close();
+            return ret + "";
+        }
+
+        public void IncCounter(String uid)
+        {
+            if (Context.Counter.Select(t => t.uid).Contains(uid))
+            {
+                var result = Context.Counter.First(p => p.uid == uid);
+
+                result.count++;
+                if (TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id,
+                    "Ekaterinburg Standard Time").Date == result.last.Value.Date)
+                {
+                    result.today++;
+                }
+                else
+                {
+                    result.today = 1;
+                }
+            }
+            else
+            {
+                var record = new Counter {uid = uid, count = 1, today = 1};
+                Context.Counter.InsertOnSubmit(record);
+            }
+            Context.SubmitChanges();
+            Context.Connection.Close();
+        }
+
+        public DateTime? GetLastUsingDate(String uid)
+        {
+            var result = Context.Counter.First(p => p.uid == uid);
+            var ret = result.lastusing;
+            Context.Connection.Close();
+            return ret;
+        }
+
+        public DateTime? GetLastDate(String uid)
+        {
+            var result = Context.Counter.First(p => p.uid == uid);
+            var ret = result.last;
+            Context.Connection.Close();
+            return ret;
+        }
+
+        public void SetLastUsingDate(string uid)
+        {
+            if (Context.Counter.Select(t => t.uid).Contains(uid))
+            {
+                var result = Context.Counter.First(p => p.uid == uid);
+                result.lastusing = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id,
+                    "Ekaterinburg Standard Time");
+                Context.SubmitChanges();
+            }
+            else
+            {
+                var now = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id,
+                    "Ekaterinburg Standard Time");
+                var record = new Counter
+                {
+                    uid = uid,
+                    count = 1,
+                    lastusing = now,
+                    last = now
+                };
+                Context.Counter.InsertOnSubmit(record);
+            }
+            Context.Connection.Close();
+        }
+
+        public void SetLastDate(String uid)
+        {
+            if (Context.Counter.Select(t => t.uid).Contains(uid))
+            {
+                var result = Context.Counter.First(p => p.uid == uid);
+                result.last = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id,
+                    "Ekaterinburg Standard Time");
+                Context.SubmitChanges();
+            }
+            else
+            {
+                var record = new Counter { uid = uid, count = 1, last = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id,
+                    "Ekaterinburg Standard Time")};
+                Context.Counter.InsertOnSubmit(record);
+            }
+            Context.Connection.Close();
+        }
+
+        public String GetTodayCounter(string uid)
+        {
+            var result = Context.Counter.First(p => p.uid == uid);
+            var ret = result.today;
+            Context.Connection.Close();
+            return ret + "";
+        }
+
         public List<Reports> GetReports()
         {
             var ret = Context.Reports.ToList();
