@@ -45,16 +45,12 @@ namespace MyWebSite.Controllers
             try
             {
                 var dbreader = new DataBaseReader();
-                var html = Request.Unvalidated.Form["report_text"];
+                var html = HttpUtility.HtmlEncode(Request.Unvalidated.Form["report_text"]);
 
                 #region Фильтруем только нужные теги
-                var sb = new StringBuilder(HttpUtility.HtmlEncode(html));
-                sb.Replace("&lt;b&gt;", "<b>");
-                sb.Replace("&lt;/b&gt;", "</b>");
-                sb.Replace("&lt;i&gt;", "<i>");
-                sb.Replace("&lt;/i&gt;", "</i>");
-                //add Raw HTML for edit report
-                var text = Regex.Replace(sb.ToString(), "&lt;img(?:.*?)src=&quot;(.*?)&quot;(?:.*?)/&gt;", "<img src=\"$1\"/>");
+                html = Regex.Replace(html, "&lt;b&gt;(.*?)&lt;/b&gt;", "<b>$1</b>");
+                html = Regex.Replace(html, "&lt;i&gt;(.*?)&lt;/i&gt;", "<i>$1</i>");
+                var text = Regex.Replace(html, "&lt;img(?:.*?)src=&quot;(.*?)&quot;(?:.*?)/&gt;", "<br/><img src=\"$1\"/><br/>");
                 #endregion
 
                 var uid = Request["uid"];

@@ -99,5 +99,5 @@
 }
 
 #uid_box, #secret_box, #report_action, .report_id, .secret_box {
-    display: none;
+    display: block;
 }
