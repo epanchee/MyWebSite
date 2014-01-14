@@ -58,6 +58,7 @@
 .edit_info {
     float: right;
     padding: 0 5px;
+    min-height: 20px;
 }
 
 #report_button, .report_edit, #edit_button, #delete_button {
