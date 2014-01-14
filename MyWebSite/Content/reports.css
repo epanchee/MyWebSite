@@ -51,8 +51,13 @@
     min-height: 200px;
 }
 
-#report_button, .report_edit, #edit_button, #delete_button, .report_date  {
+#report_button, .report_edit, #edit_button, #delete_button, .report_date, .edit_info  {
     margin-top: 1%;
+}
+
+.edit_info {
+    float: right;
+    padding: 0 5px;
 }
 
 #report_button, .report_edit, #edit_button, #delete_button {
