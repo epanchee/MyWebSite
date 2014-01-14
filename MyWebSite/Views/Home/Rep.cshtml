@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using System.Text.RegularExpressions
 @using System.Threading
 @using MyWebSite.Models
 @{
@@ -26,8 +27,13 @@
                     <a href=@href>@user.first_name @user.last_name</a>
                 </div>
                 <div class="report_id">@report.Id</div>
-        
-                <div class="report_content">@Html.Raw(report.content)</div>
+                @{
+                    var html = report.content;
+                    html = Regex.Replace(html, "&lt;b&gt;(.*?)&lt;/b&gt;", "<b>$1</b>");
+                    html = Regex.Replace(html, "&lt;i&gt;(.*?)&lt;/i&gt;", "<i>$1</i>");
+                    var text = Regex.Replace(html, "&lt;img(?:.*?)src=&quot;(.*?)&quot;(?:.*?)/&gt;", "<br/><img src=\"$1\"/><br/>");
+                }
+                <div class="report_content">@Html.Raw(text)</div>
                 <div class="report_date">@report.date</div>
                 <div class="report_edit" onclick="editRep(this)">Редактировать</div>
             </div>
