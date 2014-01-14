@@ -288,6 +288,7 @@ namespace MyWebSite.Models
         {
             var rec = Context.ip_counter.First(t => t.ip == ip);
             rec.last_visit = lastUsing;
+            Context.SubmitChanges();
             Context.Connection.Close();
         }
 
@@ -329,6 +330,7 @@ namespace MyWebSite.Models
             var rec = Context.ip_counter.First(t => t.ip == ip);
             rec.last_visit = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id,
                             "Ekaterinburg Standard Time");
+            Context.SubmitChanges();
             Context.Connection.Close();
         }
     }
