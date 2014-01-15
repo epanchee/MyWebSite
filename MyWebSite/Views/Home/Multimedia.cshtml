@@ -37,6 +37,21 @@
         var names = @Html.Raw(Json.Encode(fnames));
     }
 
+        var ie = (function () {
+
+            var undef,
+                v = 3,
+                div = document.createElement('div'),
+                all = div.getElementsByTagName('i');
+
+            while (
+                div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
+                all[0]
+            );
+
+            return v > 4 ? v : undef;
+
+        }());
         var current;
         var preloaded;
         var files = @names
@@ -59,8 +74,35 @@
 
         function _viewImg(filePath)
         {
-            history.pushState('esc', null, '');
-            history.pushState(filePath, null, '');
+            if (ie > 9) {
+                history.pushState('esc', null, '');
+                history.pushState(filePath, null, '');
+            }
+            
+            if (!Array.prototype.indexOf) {
+                Array.prototype.indexOf = function (elt /*, from*/) {
+                    var len = this.length >>> 0;
+
+                    var from = Number(arguments[1]) || 0;
+                    from = (from < 0)
+                         ? Math.ceil(from)
+                         : Math.floor(from);
+                    if (from < 0)
+                        from += len;
+
+                    for (; from < len; from++) {
+                        if (from in this &&
+                            this[from] === elt)
+                            return from;
+                    }
+                    return -1;
+                };
+            }
+
+            var j = files.indexOf(filePath) + 1;
+            if (j > files.length) j = files.length;
+            preload(files[j]);
+            
             viewImg(filePath);
         }
 
@@ -145,7 +187,7 @@
             (b = document.getElementById("back")).parentNode.removeChild(b);
             (i = document.getElementById("imgBack")).parentNode.removeChild(i);
             viewImg(files[j]);
-            history.pushState(files[j], null, '');
+            if (ie > 9) history.pushState(files[j], null, '');
             
             var p = j + (j > 0 ? 1 : -1);
             if (p < 0) p = 0;
@@ -172,10 +214,10 @@
             if (history.state != 'esc') viewImg(history.state);
         }, false);
 
-        document.onkeydown = function(e) {
-            var KeyID = (window.event) ? event.keyCode : e.keyCode;
+        document.onkeydown = function (e) {
+            var eventObj = (window.event) ? event : e;
+            var KeyID = eventObj.charCode || eventObj.keyCode;
             if (KeyID == 27 || KeyID == 37 || KeyID == 39 || KeyID == 112) {
-                e.preventDefault();
                 if (!current) return;
             }
             if (KeyID == 27) {

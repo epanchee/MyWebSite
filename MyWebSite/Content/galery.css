@@ -16,6 +16,7 @@
 
 #showedImg, #imgBack {
     width: 50%;
+    height: 70%;
     margin: 7% 25% 0 25%;
 }
 
@@ -23,7 +24,7 @@
     width: 100%;
     height: 3%;
     font-size: 1.2em;
-    padding-top: 1%;
+    padding: 1% 0;
     text-align: center;
     margin: auto;
     cursor: pointer;
@@ -39,12 +40,13 @@
 #imgBack {
     position: fixed;
     height: 100%;
-    top: -5%;
+    top: -7%;
+    z-index: 1000;
 }
 
 #left, #right {
     width: 50%;
-    height: 65%;
+    height: 72%;
     float: left;
     cursor: pointer;
 }
@@ -55,7 +57,7 @@
 }
 
 #loading {
-    width: 4%;
+    /*width: 4%;*/
     margin: 20% 48% 0 48%;
 }
 
@@ -63,5 +65,14 @@
     #showedImg, #imgBack {
         width: 60%;
         margin: 5% 20% 0 20%;
+    }
+    #start {
+        font-size: 1.7vh;
+    }
+}
+
+@media screen and (max-width: 650px) {
+        #start {
+        font-size: 0.7vh;
     }
 }
