@@ -16,6 +16,7 @@
     @{
         var dbreader = new DataBaseReader();
         var reports = dbreader.GetReports();
+        var c = 0;
         foreach (var report in reports)
         {
             var user = VKapi.Interact(report.uid);
@@ -26,12 +27,12 @@
                     <img alt="user" src=@user.photo_100 /> <br/>
                     <a href=@href>@user.first_name @user.last_name</a>
                 </div>
-                <div class="report_id">@report.Id</div>
+                <div class="report_id">@c++</div>
                 @{
                     var html = HttpUtility.HtmlEncode(report.content);
                     html = Regex.Replace(html, "&lt;b&gt;(.*?)&lt;/b&gt;", "<b>$1</b>");
                     html = Regex.Replace(html, "&lt;i&gt;(.*?)&lt;/i&gt;", "<i>$1</i>");
-                    var text = Regex.Replace(html, "&lt;img(?:.*?)src=&quot;(.*?)&quot;(?:.*?)/&gt;", "<br/><img src=\"$1\"/><br/>");
+                    var text = Regex.Replace(html, "&lt;img(?:.*?)src=&quot;(.*?)&quot;(?:.*?)/&gt;", "<br/><img alt=\"customImg\" src=\"$1\"/><br/>");
                 }
                 <div class="report_content">@Html.Raw(text)</div>
                 <div class="report_date">@report.date</div>
