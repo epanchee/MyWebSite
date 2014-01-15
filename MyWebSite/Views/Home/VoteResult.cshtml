@@ -9,11 +9,9 @@
     @{
     var dbreader = new DataBaseReader();
     var voting = dbreader.GetAllVotes();
-    var c = 0;
     foreach (var vote in voting)
     {
-        c++;
-        <voter id="@c">
+        <voter id="@vote.id">
             @{var preference = dbreader.GetAllPreference(@vote.ip);}
             <name>@vote.name</name>
             <email>@vote.email</email>
