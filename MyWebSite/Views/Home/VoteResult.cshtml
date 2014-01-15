@@ -12,7 +12,8 @@
     var c = 0;
     foreach (var vote in voting)
     {
-        <voter id="@c++">
+        c++;
+        <voter id="@c">
             @{var preference = dbreader.GetAllPreference(@vote.ip);}
             <name>@vote.name</name>
             <email>@vote.email</email>
