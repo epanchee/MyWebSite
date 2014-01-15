@@ -253,7 +253,7 @@ namespace MyWebSite.Models
 
         public List<Voting> GetAllVotes()
         {
-            var ret = Context.Voting.ToList();
+            var ret = Context.Voting.OrderBy(p => p.id).ToList();
             Context.Connection.Close();
             return ret;
         }

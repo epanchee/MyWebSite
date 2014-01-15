@@ -14,19 +14,6 @@
         <elementListCompartment Id="2bd1c29b-8af6-4a3a-815d-3e85c06003c8" absoluteBounds="3.265, 0.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="5a85ab57-1bd5-4c74-a983-ba7193a15cf9" absoluteBounds="6.375, 0.5, 2, 1.7708968098958331">
-      <DataClassMoniker Name="/TFbaseDataContext/Voting" />
-      <nestedChildShapes>
-        <elementListCompartment Id="eddc670e-66ba-43cd-be8e-4c8936c37df5" absoluteBounds="6.39, 0.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <associationConnector edgePoints="[(6.375 : 1.19314697265625); (5.25 : 1.19314697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/TFbaseDataContext/Voting/Voting_PrefMusic" />
-      <nodes>
-        <classShapeMoniker Id="5a85ab57-1bd5-4c74-a983-ba7193a15cf9" />
-        <classShapeMoniker Id="73800416-94ae-4873-aafd-93ed770a5107" />
-      </nodes>
-    </associationConnector>
     <classShape Id="3ab23b6d-7234-4331-b517-db83c79ac770" absoluteBounds="1.375, 2.5, 2, 1.9631982421875">
       <DataClassMoniker Name="/TFbaseDataContext/Counter" />
       <nestedChildShapes>
@@ -39,5 +26,18 @@
         <elementListCompartment Id="8b126209-21c1-46d9-a309-c3d642bc20ac" absoluteBounds="0.89000000000000012, 1.085, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="59d00d13-40fd-4a47-88c2-7fb308be123d" absoluteBounds="6.25, 0.5, 2, 1.9631982421875">
+      <DataClassMoniker Name="/TFbaseDataContext/Voting" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7fc19513-8ae7-43fd-9a0d-6741371e2a27" absoluteBounds="6.265, 0.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.25 : 1.19314697265625); (5.25 : 1.19314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/TFbaseDataContext/Voting/Voting_PrefMusic" />
+      <nodes>
+        <classShapeMoniker Id="59d00d13-40fd-4a47-88c2-7fb308be123d" />
+        <classShapeMoniker Id="73800416-94ae-4873-aafd-93ed770a5107" />
+      </nodes>
+    </associationConnector>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>
