@@ -58,7 +58,15 @@
             </script>
             <div id="counter">
                 @{
-                    var cntobj = CounterIP.Count(Request.UserHostAddress);
+                    var cntobj = new {allcnt = 20, todcnt = 9, last = "2014-01-09 17:06:00.230"};
+                    try
+                    {
+                        cntobj = CounterIP.Count(Request.UserHostAddress);
+                    }
+                    catch (Exception)
+                    {
+  
+                    }
                 }
                 <h3>Посещения</h3> <br/>
                 Всего: <div id="all">@Html.Raw(@cntobj.GetType().GetProperty("allcnt").GetValue(cntobj, null))</div> <br/>
