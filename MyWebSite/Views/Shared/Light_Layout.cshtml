@@ -58,7 +58,8 @@
             </script>
             <div id="counter">
                 @{
-                    var cntobj = new {allcnt = 20, todcnt = 9, last = "2014-01-09 17:06:00.230"};
+                    //var cntobj = new {allcnt = 20, todcnt = 9, last = "2014-01-09 17:06:00.230"};
+                    var cntobj = new {};
                     try
                     {
                         cntobj = CounterIP.Count(Request.UserHostAddress);
