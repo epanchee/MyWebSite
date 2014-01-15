@@ -315,6 +315,7 @@ namespace MyWebSite.Models
                 Context.SubmitChanges();
             }
 
+            Context.Connection.Close();
             return ret;
         }
 
