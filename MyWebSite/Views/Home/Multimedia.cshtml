@@ -37,19 +37,28 @@
         var names = @Html.Raw(Json.Encode(fnames));
     }
 
-        var ie = (function () {
+        var ie = (function() {
 
-            var undef,
-                v = 3,
-                div = document.createElement('div'),
-                all = div.getElementsByTagName('i');
+            //var undef,
+            //    v = 3,
+            //    div = document.createElement('div'),
+            //    all = div.getElementsByTagName('i');
 
-            while (
-                div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
-                all[0]
-            );
+            //while (
+            //    div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
+            //    all[0]
+            //);
 
-            return v > 4 ? v : undef;
+            //return v > 4 ? v : undef;
+
+            var rv = -1; // Return value assumes failure.
+            if (navigator.appName == 'Microsoft Internet Explorer') {
+                var ua = navigator.userAgent;
+                var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+                if (re.exec(ua) != null)
+                    rv = parseFloat(RegExp.$1);
+            }
+            return rv;
 
         }());
         var current;
@@ -72,21 +81,20 @@
             pr_img.setAttribute("src", "/Content/Images/Galery/" + name);
         }
 
-        function _viewImg(filePath)
-        {
+        function _viewImg(filePath) {
             if (ie > 9) {
                 history.pushState('esc', null, '');
                 history.pushState(filePath, null, '');
             }
-            
+
             if (!Array.prototype.indexOf) {
-                Array.prototype.indexOf = function (elt /*, from*/) {
+                Array.prototype.indexOf = function(elt /*, from*/) {
                     var len = this.length >>> 0;
 
                     var from = Number(arguments[1]) || 0;
                     from = (from < 0)
-                         ? Math.ceil(from)
-                         : Math.floor(from);
+                        ? Math.ceil(from)
+                        : Math.floor(from);
                     if (from < 0)
                         from += len;
 
@@ -102,7 +110,7 @@
             var j = files.indexOf(filePath) + 1;
             if (j > files.length) j = files.length;
             preload(files[j]);
-            
+
             viewImg(filePath);
         }
 
@@ -130,7 +138,7 @@
             wrap.appendChild(img);
             wrap.setAttribute('onclick', 'esc()');
             current = filePath;
-            
+
             var imgBack = document.createElement('div');
             var left = document.createElement('div');
             var right = document.createElement('div');
@@ -188,18 +196,20 @@
             (i = document.getElementById("imgBack")).parentNode.removeChild(i);
             viewImg(files[j]);
             if (ie > 9) history.pushState(files[j], null, '');
-            
+
             var p = j + (j > 0 ? 1 : -1);
             if (p < 0) p = 0;
             if (p > files.length - 1) p = files.length - 1;
             preload(files[p]);
         }
-        
+
         createField();
 
         window.onload = function(e) {
-            var home = getCookie("home");
-            var name = getCookie("src");
+            try {
+                var home = getCookie("home");
+                var name = getCookie("src");
+            } catch (e) {}
             if (!name)
                 if (home) name = home;
                 else return;
@@ -208,13 +218,16 @@
             history.pushState(name, null, '');
         };
 
-        window.addEventListener("popstate", function(e) {
-            if (!history.state) return;
-            esc();
-            if (history.state != 'esc') viewImg(history.state);
-        }, false);
+        try {
+            window.addEventListener("popstate", function(e) {
+                if (!history.state) return;
+                esc();
+                if (history.state != 'esc') viewImg(history.state);
+            }, false);
+        } catch(e) {
+        }
 
-        document.onkeydown = function (e) {
+        document.onkeydown = function(e) {
             var eventObj = (window.event) ? event : e;
             var KeyID = eventObj.charCode || eventObj.keyCode;
             if (KeyID == 27 || KeyID == 37 || KeyID == 39 || KeyID == 112) {

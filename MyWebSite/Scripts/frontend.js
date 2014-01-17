@@ -103,4 +103,8 @@ setInterval(ajaxVoting, 10000);
 
 var loc = (document.location.href).match(/.*\/(.+)/)[1];
 var elem = document.getElementById(loc);
-if (elem != null) elem.classList.add("target");
+try {
+    if (elem != null) elem.classList.add("target");
+} catch(e) {
+    
+}
