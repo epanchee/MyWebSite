@@ -13,7 +13,7 @@
         <a id="edit_user_href" href=@href>@user.first_name @user.last_name</a>
     </div>
     <form class="report_content" id="edit_report" method="POST">
-        <textarea required name="report_text" class="report_text">@dbreader.GetReport(Int32.Parse(Request["id"]))</textarea> <br />
+        <textarea required name="report_text" class="report_text">@dbreader.GetHistoryReport(Int32.Parse(Request["id"]), Request["date"])</textarea> <br />
         <input type="text" name="uid" class="secret_box" value="@Request["uid"]">
         <input type="text" name="secret" class="secret_box" value="@Request["secret"]">
         <input type="text" name="type" class="secret_box" value="edit">

@@ -240,6 +240,7 @@
     <Content Include="Content\Images\vd_act.JPG" />
     <Content Include="Content\Images\vd_dis.JPG" />
     <Content Include="Content\Images\we.jpg" />
+    <Content Include="Content\Images\arrow.png" />
     <Content Include="Content\reports.css" />
     <Content Include="Content\voting.css" />
     <Content Include="Global.asax" />
@@ -278,6 +279,7 @@
     <Content Include="Views\Home\VoteResult.cshtml" />
     <None Include="Properties\PublishProfiles\terraflamenco2 - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\terraflamenco2 - Web Deploy.pubxml" />
+    <Content Include="Views\Users\History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

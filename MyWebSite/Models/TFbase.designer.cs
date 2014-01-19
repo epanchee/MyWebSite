@@ -45,6 +45,9 @@ namespace MyWebSite.Models
     partial void InsertVoting(Voting instance);
     partial void UpdateVoting(Voting instance);
     partial void DeleteVoting(Voting instance);
+    partial void InsertReportsHistory(ReportsHistory instance);
+    partial void UpdateReportsHistory(ReportsHistory instance);
+    partial void DeleteReportsHistory(ReportsHistory instance);
     #endregion
 		
 		public TFbaseDataContext(string connection) : 
@@ -108,6 +111,14 @@ namespace MyWebSite.Models
 			get
 			{
 				return this.GetTable<Voting>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ReportsHistory> ReportsHistory
+		{
+			get
+			{
+				return this.GetTable<ReportsHistory>();
 			}
 		}
 	}
@@ -896,6 +907,140 @@ namespace MyWebSite.Models
 		{
 			this.SendPropertyChanging();
 			entity.Voting = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ReportsHistory")]
+	public partial class ReportsHistory : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _num;
+		
+		private System.Nullable<int> _id;
+		
+		private string _content;
+		
+		private string _date;
+		
+    #region Определения метода расширяемости
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnnumChanging(int value);
+    partial void OnnumChanged();
+    partial void OnidChanging(System.Nullable<int> value);
+    partial void OnidChanged();
+    partial void OncontentChanging(string value);
+    partial void OncontentChanged();
+    partial void OndateChanging(string value);
+    partial void OndateChanged();
+    #endregion
+		
+		public ReportsHistory()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_num", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int num
+		{
+			get
+			{
+				return this._num;
+			}
+			set
+			{
+				if ((this._num != value))
+				{
+					this.OnnumChanging(value);
+					this.SendPropertyChanging();
+					this._num = value;
+					this.SendPropertyChanged("num");
+					this.OnnumChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int")]
+		public System.Nullable<int> id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_content", DbType="NVarChar(MAX)")]
+		public string content
+		{
+			get
+			{
+				return this._content;
+			}
+			set
+			{
+				if ((this._content != value))
+				{
+					this.OncontentChanging(value);
+					this.SendPropertyChanging();
+					this._content = value;
+					this.SendPropertyChanged("content");
+					this.OncontentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_date", DbType="NVarChar(MAX)")]
+		public string date
+		{
+			get
+			{
+				return this._date;
+			}
+			set
+			{
+				if ((this._date != value))
+				{
+					this.OndateChanging(value);
+					this.SendPropertyChanging();
+					this._date = value;
+					this.SendPropertyChanged("date");
+					this.OndateChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

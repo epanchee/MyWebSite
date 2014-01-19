@@ -36,5 +36,10 @@ namespace MyWebSite.Controllers
             return View();
         }
 
+        public ActionResult History()
+        {
+            return View();
+        }
+
     }
 }

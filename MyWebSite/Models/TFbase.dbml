@@ -43,4 +43,12 @@
       <Association Name="Voting_PrefMusic" Member="PrefMusic" ThisKey="ip" OtherKey="vote_ip" Type="PrefMusic" />
     </Type>
   </Table>
+  <Table Name="dbo.ReportsHistory" Member="ReportsHistory">
+    <Type Name="ReportsHistory">
+      <Column Name="num" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="date" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

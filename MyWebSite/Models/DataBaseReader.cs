@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Web.Mvc;
 
@@ -179,6 +180,12 @@ namespace MyWebSite.Models
 
                 var report = Context.Reports.First(p => p.Id == id);
                 report.content = text;
+                var record = new ReportsHistory
+                {
+                    id = id, date = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, TimeZoneInfo.Local.Id,
+                        "Ekaterinburg Standard Time").ToString("G"), content = text
+                };
+                Context.ReportsHistory.InsertOnSubmit(record);
 
                 Context.SubmitChanges();
                 Context.Connection.Close();
@@ -333,6 +340,20 @@ namespace MyWebSite.Models
                             "Ekaterinburg Standard Time");
             Context.SubmitChanges();
             Context.Connection.Close();
+        }
+
+        public List<ReportsHistory> GetHistory(int id)
+        {
+            var res = Context.ReportsHistory.Where(p => p.id == id).ToList();
+            Context.Connection.Close();
+            return res;
+        }
+
+        public String GetHistoryReport(int id, string date)
+        {
+            var res = Context.ReportsHistory.Where(i => i.id == id).First(d => d.date == date);
+            Context.Connection.Close();
+            return res.content;
         }
     }
 }

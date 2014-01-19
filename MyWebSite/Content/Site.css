@@ -45,6 +45,7 @@ input , textarea {border: 1px solid #b71;}
     padding: 0 5px;
     min-height: 20px;
     text-align: center;
+    display: inline-block;
 }
 #footer div{width: 98%; text-align: center; margin: 2% 1% 0 1%; color: #fff; float: left; font-size: 1em}
 .bio_content * { margin-top: 30px; font-size: 1.2em;margin: auto; width: 100%}

@@ -1,4 +1,5 @@
-﻿@using System.Text
+﻿@using System.Drawing
+@using System.Text
 @using MyWebSite.Models
 @{
     var dbreader = new DataBaseReader();
@@ -8,7 +9,16 @@
         <br/> <div>Оценка группы:</div> <br/>
         var rates = dbreader.GetRateVotesCount();
         var content = wb.DownloadString(String.Format("http://146.185.176.129/help/image?resolution=200x150&text1=1,15,Отлично:  {0}&text2=1,40,Хорошо:  {1}&text3=1,65,Пойдет:  {2}&text4=1,90,Не очень:  {3}&text5=1,115,Ужас:  {4}", rates[4], rates[3], rates[2], rates[1], rates[0]));
-        <img src="data:image/png;base64,@content" />
+
+        var bytes = Convert.FromBase64String(content);
+        using (var ms = new MemoryStream(bytes))
+        {
+            var image = Image.FromStream(ms);
+            image.Save(HttpContext.Current.Server.MapPath("~/Content/Images/voting.png"));
+        }
+        
+        <img src="/Content/Images/voting.png" />
+        @*<img src="data:image/png;base64,@content" />*@
     }
     catch (Exception e)
     {

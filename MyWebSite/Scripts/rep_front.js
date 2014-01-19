@@ -27,6 +27,32 @@ function editSuccess(status, text, elem) {
     }
 }
 
+function historySuccess(status, text, elem) {
+    if (status == 200) {
+        document.getElementById('edit_action').outerHTML = text;
+    }
+}
+
+function historyChange(elem) {
+    var parent = elem.parentNode;
+    var uid = getCookie("uid");
+    var id = parent.parentNode.children[0].textContent;
+    var date = document.getElementById('history').value;
+    var xmlhttp = getXmlHttp();
+    xmlhttp.open("GET", '/users/history' + '?id=' + id + '&date=' + date + "&uid=" + uid);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4) {
+            historySuccess(
+                xmlhttp.status,
+                xmlhttp.responseText,
+                parent
+            );
+        }
+    };
+
+    xmlhttp.send(null);
+}
+
 function editRep(elem) {
     var parent = elem.parentNode;
     var uid = getCookie("uid");

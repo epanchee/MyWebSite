@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
-using System.Linq;
+using System.IO;
 using System.Net;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading;
 using System.Web;
-using System.Web.Mvc;
 
 namespace MyWebSite.Models
 {
@@ -52,8 +52,18 @@ namespace MyWebSite.Models
 
             }
 
-            var all_counter = String.Format("<img alt=\"{0}\" src=\"data:image/png;base64,{1}\" />", all, allbase64);
-            var today_counter = String.Format("<img alt=\"{0}\" src=\"data:image/png;base64,{1}\" />", today, todaybase64);
+            var bytesAll = Convert.FromBase64String(allbase64);
+            var bytesToday = Convert.FromBase64String(todaybase64);
+
+            var imageAll = Image.FromStream(new MemoryStream(bytesAll));
+            imageAll.Save(HttpContext.Current.Server.MapPath("~/Content/Images/allcnt.png"), System.Drawing.Imaging.ImageFormat.Png);
+            var imageToday = Image.FromStream(new MemoryStream(bytesToday));
+            imageToday.Save(HttpContext.Current.Server.MapPath("~/Content/Images/todaycnt.png"), System.Drawing.Imaging.ImageFormat.Png);
+
+            var all_counter = String.Format("<img alt=\"{0}\" src=\"{1}\" />", all, "/Content/Images/allcnt.png");
+            var today_counter = String.Format("<img alt=\"{0}\" src=\"{1}\" />", today, "/Content/Images/todaycnt.png");
+            //var all_counter = String.Format("<img alt=\"{0}\" src=\"data:image/png;base64,{1}\" />", all, allbase64);
+            //var today_counter = String.Format("<img alt=\"{0}\" src=\"data:image/png;base64,{1}\" />", today, todaybase64);
 
             return new { last = last_date, allcnt = all_counter, todcnt = today_counter};
         }

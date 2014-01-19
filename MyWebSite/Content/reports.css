@@ -51,8 +51,14 @@
     min-height: 200px;
 }
 
-#report_button, .report_edit, #edit_button, #delete_button, .report_date, .edit_info  {
+#report_button, .report_edit, #edit_button, #delete_button, .report_date, .edit_info, #history {
     margin-top: 1%;
+}
+
+#history {
+    margin-bottom: 1%;
+    border: 1px solid #bb7711;
+    background: url('/Content/Images/arrow.png') no-repeat right
 }
 
 .edit_info {
