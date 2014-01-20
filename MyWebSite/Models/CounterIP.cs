@@ -44,8 +44,8 @@ namespace MyWebSite.Models
                 var wb = new WebClient { Encoding = Encoding.UTF8 };
                 all = dbreader.IPgetAllCounter();
                 today = dbreader.IPGetTodayCounter();
-                allbase64 = wb.DownloadString(String.Format("http://146.185.176.129/help/image?resolution=50x30&text1=1,15,{0}", all));
-                todaybase64 = wb.DownloadString(String.Format("http://146.185.176.129/help/image?resolution=50x30&text1=1,15,{0}", today));
+                allbase64 = wb.DownloadString(String.Format("http://146.185.176.129/help/image?resolution=100x60&text1=1,15,{0}&text2=1,40,{1}", "Сегодня: " + today, "Всего: " + all));
+                //todaybase64 = wb.DownloadString(String.Format("http://146.185.176.129/help/image?resolution=50x30&text1=1,15,{0}", today));
             }
             catch (Exception)
             {
@@ -53,19 +53,20 @@ namespace MyWebSite.Models
             }
 
             var bytesAll = Convert.FromBase64String(allbase64);
-            var bytesToday = Convert.FromBase64String(todaybase64);
+            //var bytesToday = Convert.FromBase64String(todaybase64);
 
             var imageAll = Image.FromStream(new MemoryStream(bytesAll));
             imageAll.Save(HttpContext.Current.Server.MapPath("~/Content/Images/allcnt.png"), System.Drawing.Imaging.ImageFormat.Png);
-            var imageToday = Image.FromStream(new MemoryStream(bytesToday));
-            imageToday.Save(HttpContext.Current.Server.MapPath("~/Content/Images/todaycnt.png"), System.Drawing.Imaging.ImageFormat.Png);
+            //var imageToday = Image.FromStream(new MemoryStream(bytesToday));
+            //imageToday.Save(HttpContext.Current.Server.MapPath("~/Content/Images/todaycnt.png"), System.Drawing.Imaging.ImageFormat.Png);
 
             var all_counter = String.Format("<img alt=\"{0}\" src=\"{1}\" />", all, "/Content/Images/allcnt.png");
-            var today_counter = String.Format("<img alt=\"{0}\" src=\"{1}\" />", today, "/Content/Images/todaycnt.png");
+            //var today_counter = String.Format("<img alt=\"{0}\" src=\"{1}\" />", today, "/Content/Images/todaycnt.png");
+
             //var all_counter = String.Format("<img alt=\"{0}\" src=\"data:image/png;base64,{1}\" />", all, allbase64);
             //var today_counter = String.Format("<img alt=\"{0}\" src=\"data:image/png;base64,{1}\" />", today, todaybase64);
 
-            return new { last = last_date, allcnt = all_counter, todcnt = today_counter};
+            return new { last = last_date, allcnt = all_counter};
         }
     }
 }
